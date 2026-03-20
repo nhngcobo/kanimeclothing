@@ -1,0 +1,113 @@
+@using kanimeclothing.Services
+@using kanimeclothing.Models
+@inject ILocalizationService Localizer
+@model Product
+
+@{
+    ViewData["Title"] = Model?.Name ?? "Product Details";
+}
+
+<link rel="stylesheet" href="~/css/details.css" />
+
+<div class="details-container">
+    <div class="details-back-link">
+        <a href="@Url.Action("Shop", "Home")" class="back-link">← @Localizer["BackToShop"]</a>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="details-wrapper">
+            <div class="details-image-section">
+                <div class="details-image-container">
+                    <img src="@Model.Url" alt="@Model.Name" class="details-product-image">
+                    @if (Model.Id == 1)
+                    {
+                        <div class="details-badge">SALE</div>
+                    }
+                </div>
+            </div>
+
+            <div class="details-info-section">
+                <h1 class="details-title">@Model.Name</h1>
+
+                <div class="details-category-rating">
+                    <p class="details-category">@Model.Category</p>
+                    <p class="details-color">@Localizer["Color"]: <span>@Model.Color</span></p>
+                </div>
+
+                <div class="details-price-section">
+                    <p class="details-price">R@(Model.Price.ToString("F2"))</p>
+                    <p class="details-stock">
+                        @if (Model.Stock > 0)
+                        {
+                            <span class="stock-available">@Localizer["InStock"] (@Model.Stock @Localizer["Items"])</span>
+                        }
+                        else
+                        {
+                            <span class="stock-unavailable">@Localizer["OutOfStock"]</span>
+                        }
+                    </p>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="section-title">@Localizer["ProductDetails"]</h3>
+                    <table class="details-table">
+                        <tr>
+                            <td class="label">@Localizer["Size"]:</td>
+                            <td class="value">@Model.Size</td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Localizer["Material"]:</td>
+                            <td class="value">@Model.Material</td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Localizer["Measurements"]:</td>
+                            <td class="value">@Model.Measurements</td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Localizer["Origin"]:</td>
+                            <td class="value">@Model.Origin</td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Localizer["ProductCode"]:</td>
+                            <td class="value">@Model.ProductCode</td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Localizer["UUID"]:</td>
+                            <td class="value uuid">@Model.UUID</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="details-actions">
+                    <button class="add-to-cart-btn" disabled="@(Model.Stock <= 0 ? "disabled" : "")">
+                        @if (Model.Stock > 0)
+                        {
+                            <span>@Localizer["AddToCart"]</span>
+                        }
+                        else
+                        {
+                            <span>@Localizer["OutOfStock"]</span>
+                        }
+                    </button>
+                </div>
+
+                <div class="details-share">
+                    <p class="share-title">@Localizer["ShareThisProduct"]:</p>
+                    <div class="share-buttons">
+                        <button class="share-btn facebook" title="Share on Facebook"><i class="bi bi-facebook"></i></button>
+                        <button class="share-btn twitter" title="Share on Twitter"><i class="bi bi-twitter-x"></i></button>
+                        <button class="share-btn email" title="Share via Email"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="product-not-found">
+            <p>Product not found.</p>
+            <a href="@Url.Action("Shop", "Home")" class="back-link">Go back to shop</a>
+        </div>
+    }
+</div>

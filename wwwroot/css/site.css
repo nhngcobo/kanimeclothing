@@ -565,6 +565,13 @@ textarea.form-control {
   cursor: pointer;
 }
 
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  pointer-events: auto;
+}
+
 .product-card:hover {
   transform: translateY(-5px);
 }

@@ -34,6 +34,16 @@ namespace kanimeclothing.Controllers
             return View(products);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
         public IActionResult Contact()
         {
             return View();

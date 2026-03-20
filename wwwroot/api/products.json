@@ -8,7 +8,12 @@
       "size": "L",
       "color": "Brown",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774015748/letherJacket_aqerpr.webp",
-      "stock": 8
+      "stock": 8,
+      "uuid": "a1b2c3d4-e5f6-47g8-h9i0-j1k2l3m4n5o6",
+      "productCode": "LTH001BRNL",
+      "material": "100% Premium Leather",
+      "measurements": "Chest: 48cm, Length: 72cm, Sleeve: 66cm",
+      "origin": "Italy"
     },
     {
       "id": 3,
@@ -18,7 +23,12 @@
       "size": "S",
       "color": "Tan",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774015901/women_leatherJacket_alzwuw.jpg",
-      "stock": 5
+      "stock": 5,
+      "uuid": "b2c3d4e5-f6a7-48b9-c0d1-e2f3g4h5i6j7",
+      "productCode": "LTH002TANS",
+      "material": "100% Premium Leather",
+      "measurements": "Chest: 42cm, Length: 68cm, Sleeve: 62cm",
+      "origin": "Spain"
     },
     {
       "id": 4,
@@ -28,7 +38,12 @@
       "size": "M",
       "color": "Blue",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016042/denimJacketMen_vg7vyy.jpg",
-      "stock": 15
+      "stock": 15,
+      "uuid": "c3d4e5f6-a7b8-49c0-d1e2-f3g4h5i6j7k8",
+      "productCode": "DNM001BLUM",
+      "material": "100% Cotton Denim",
+      "measurements": "Chest: 46cm, Length: 70cm, Sleeve: 64cm",
+      "origin": "USA"
     },
     {
       "id": 5,
@@ -38,7 +53,12 @@
       "size": "L",
       "color": "Charcoal",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018374/wool_blazer_rz4unr.webp",
-      "stock": 10
+      "stock": 10,
+      "uuid": "d4e5f6a7-b8c9-50d1-e2f3-g4h5i6j7k8l9",
+      "productCode": "WOL001CHRL",
+      "material": "100% Merino Wool",
+      "measurements": "Chest: 50cm, Length: 75cm, Sleeve: 68cm",
+      "origin": "New Zealand"
     },
     {
       "id": 6,
@@ -48,7 +68,12 @@
       "size": "M",
       "color": "Caramel",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016163/SuedeJacket_f92n36.jpg",
-      "stock": 7
+      "stock": 7,
+      "uuid": "e5f6a7b8-c9d0-51e2-f3g4-h5i6j7k8l9m0",
+      "productCode": "SUD001CAML",
+      "material": "100% Suede Leather",
+      "measurements": "Chest: 44cm, Length: 69cm, Sleeve: 63cm",
+      "origin": "France"
     },
     {
       "id": 7,
@@ -58,7 +83,12 @@
       "size": "S",
       "color": "Light Blue",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013884/demin_jacket_women_otherImage1_xpzxqq.jpg",
-      "stock": 20
+      "stock": 20,
+      "uuid": "f6a7b8c9-d0e1-52f3-g4h5-i6j7k8l9m0n1",
+      "productCode": "DNM002LTBS",
+      "material": "100% Cotton Denim",
+      "measurements": "Chest: 40cm, Length: 55cm, Sleeve: 58cm",
+      "origin": "USA"
     },
     {
       "id": 8,
@@ -68,7 +98,12 @@
       "size": "XL",
       "color": "Navy",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016248/BomberJacket_Men_qkx71p.webp",
-      "stock": 9
+      "stock": 9,
+      "uuid": "a7b8c9d0-e1f2-53g4-h5i6-j7k8l9m0n1o2",
+      "productCode": "BMB001NVYXL",
+      "material": "Nylon with Fleece Lining",
+      "measurements": "Chest: 54cm, Length: 76cm, Sleeve: 70cm",
+      "origin": "Canada"
     },
     {
       "id": 9,
@@ -78,7 +113,12 @@
       "size": "M",
       "color": "White",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013883/faux_fur_coat_yjyuu9.jpg",
-      "stock": 4
+      "stock": 4,
+      "uuid": "b8c9d0e1-f2g3-54h5-i6j7-k8l9m0n1o2p3",
+      "productCode": "FUR001WHTM",
+      "material": "Polyester Faux Fur",
+      "measurements": "Chest: 46cm, Length: 85cm, Sleeve: 65cm",
+      "origin": "Belgium"
     },
     {
       "id": 10,
@@ -88,7 +128,12 @@
       "size": "8-10Y",
       "color": "Red",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018847/outdoorJacket_wmhfgh.png",
-      "stock": 18
+      "stock": 18,
+      "uuid": "c9d0e1f2-g3h4-55i6-j7k8-l9m0n1o2p3q4",
+      "productCode": "KDS001REDY",
+      "material": "Waterproof Nylon",
+      "measurements": "Chest: 32cm, Length: 50cm, Sleeve: 45cm",
+      "origin": "Germany"
     },
     {
       "id": 11,
@@ -98,7 +143,12 @@
       "size": "10-12Y",
       "color": "Green",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016449/Sunndy_dress_d9v3wa.jpg",
-      "stock": 25
+      "stock": 25,
+      "uuid": "d0e1f2g3-h4i5-56j7-k8l9-m0n1o2p3q4r5",
+      "productCode": "KDS002GRNY",
+      "material": "100% Cotton Poplin",
+      "measurements": "Chest: 36cm, Length: 65cm, Sleeve: 48cm",
+      "origin": "Portugal"
     },
     {
       "id": 12,
@@ -108,7 +158,12 @@
       "size": "6-8Y",
       "color": "Black",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018624/puffer_jacket_zel5xu.jpg",
-      "stock": 14
+      "stock": 14,
+      "uuid": "e1f2g3h4-i5j6-57k8-l9m0-n1o2p3q4r5s6",
+      "productCode": "KDS003BLKY",
+      "material": "Polyester with Down Filling",
+      "measurements": "Chest: 30cm, Length: 48cm, Sleeve: 42cm",
+      "origin": "China"
     },
     {
       "id": 13,
@@ -118,7 +173,12 @@
       "size": "One Size",
       "color": "Black",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016506/belt_wzn8hu.jpg",
-      "stock": 35
+      "stock": 35,
+      "uuid": "f2g3h4i5-j6k7-58l9-m0n1-o2p3q4r5s6t7",
+      "productCode": "ACC001BLTK",
+      "material": "100% Genuine Leather",
+      "measurements": "Length: 110cm (Adjustable), Width: 4cm",
+      "origin": "Argentina"
     },
     {
       "id": 14,
@@ -128,7 +188,12 @@
       "size": "One Size",
       "color": "Burgundy",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013873/wool_scarf_lsr65p.jpg",
-      "stock": 28
+      "stock": 28,
+      "uuid": "g3h4i5j6-k7l8-59m0-n1o2-p3q4r5s6t7u8",
+      "productCode": "ACC002SCRF",
+      "material": "100% Merino Wool",
+      "measurements": "Length: 180cm, Width: 25cm",
+      "origin": "Scotland"
     },
     {
       "id": 15,
@@ -138,7 +203,12 @@
       "size": "M",
       "color": "Brown",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774019201/watch_g12xua.webp",
-      "stock": 16
+      "stock": 16,
+      "uuid": "h4i5j6k7-l8m9-60n1-o2p3-q4r5s6t7u8v9",
+      "productCode": "ACC003WTCH",
+      "material": "Stainless Steel, Leather Strap",
+      "measurements": "Case: 42mm, Band: 23mm",
+      "origin": "Japan"
     },
     {
       "id": 16,
@@ -148,7 +218,12 @@
       "size": "L",
       "color": "Beige",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774019028/collaredJacket_bqzkwo.png",
-      "stock": 6
+      "stock": 6,
+      "uuid": "i5j6k7l8-m9n0-61o2-p3q4-r5s6t7u8v9w0",
+      "productCode": "KDS004BEFG",
+      "material": "Polyester with Down Filling",
+      "measurements": "Chest: 48cm, Length: 70cm, Sleeve: 64cm",
+      "origin": "Norway"
     },
     {
       "id": 17,
@@ -158,7 +233,12 @@
       "size": "M",
       "color": "Dark Blue",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013870/denim_overalls_yd6s9m.png",
-      "stock": 11
+      "stock": 11,
+      "uuid": "j6k7l8m9-n0o1-62p3-q4r5-s6t7u8v9w0x1",
+      "productCode": "DNM003DBOM",
+      "material": "100% Cotton Denim",
+      "measurements": "Chest: 44cm, Length: 75cm, Inseam: 70cm",
+      "origin": "USA"
     },
     {
       "id": 19,
@@ -168,7 +248,12 @@
       "size": "M",
       "color": "Gray",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016640/cardigan_men_k9swse.jpg",
-      "stock": 22
+      "stock": 22,
+      "uuid": "k7l8m9n0-o1p2-63q4-r5s6-t7u8v9w0x1y2",
+      "productCode": "CTN001GRYM",
+      "material": "100% Cotton",
+      "measurements": "Chest: 46cm, Length: 68cm, Sleeve: 63cm",
+      "origin": "Turkey"
     },
     {
       "id": 20,
@@ -178,7 +263,12 @@
       "size": "8-10Y",
       "color": "Blue",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016810/leggin_kids_bxh9vu.jpg",
-      "stock": 17
+      "stock": 17,
+      "uuid": "l8m9n0o1-p2q3-64r5-s6t7-u8v9w0x1y2z3",
+      "productCode": "KDS005LGGY",
+      "material": "95% Cotton, 5% Elastane",
+      "measurements": "Length: 50cm, Waist: 28cm",
+      "origin": "India"
     },
     {
       "id": 21,
@@ -188,7 +278,12 @@
       "size": "One Size",
       "color": "Black",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016929/cap_jkmhqg.webp",
-      "stock": 40
+      "stock": 40,
+      "uuid": "m9n0o1p2-q3r4-65s6-t7u8-v9w0x1y2z3a4",
+      "productCode": "ACC004CPOY",
+      "material": "Cotton with Adjustable Strap",
+      "measurements": "One Size Fits All (Adjustable)",
+      "origin": "Vietnam"
     },
     {
       "id": 22,
@@ -198,7 +293,12 @@
       "size": "32",
       "color": "Khaki",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013824/chino_men_l8ytai.jpg",
-      "stock": 19
+      "stock": 19,
+      "uuid": "n0o1p2q3-r4s5-66t7-u8v9-w0x1y2z3a4b5",
+      "productCode": "CHI001KHKY",
+      "material": "98% Cotton, 2% Elastane",
+      "measurements": "Waist: 32cm, Inseam: 72cm, Rise: 28cm",
+      "origin": "Pakistan"
     },
     {
       "id": 23,
@@ -208,7 +308,12 @@
       "size": "8",
       "color": "Black",
       "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013896/high-waistOtherImage1_nf8pkr.jpg",
-      "stock": 13
+      "stock": 13,
+      "uuid": "o1p2q3r4-s5t6-67u8-v9w0-x1y2z3a4b5c6",
+      "productCode": "DNM004HWJN",
+      "material": "99% Cotton, 1% Elastane",
+      "measurements": "Waist: 30cm, Inseam: 68cm, Rise: 32cm",
+      "origin": "Brazil"
     }
   ]
 }

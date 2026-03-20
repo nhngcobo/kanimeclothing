@@ -78,11 +78,9 @@
         }
     }
 
-    // Show the first slide when page loads
     document.addEventListener("DOMContentLoaded", function() {
         currentSlide(0);
         
-        // Get the slideshow container and add hover listeners
         let slideshowContainer = document.querySelector(".slideshow-container");
         
         slideshowContainer.addEventListener("mouseenter", function() {
@@ -93,7 +91,6 @@
             startAutoSlide();
         });
 
-        // Start auto-slide initially
         startAutoSlide();
     });
 </script>

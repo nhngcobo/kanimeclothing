@@ -12,5 +12,19 @@
   "Kids": "Enfants",
   "Accessories": "Accessoires",
   "TypesOfFilter": "TYPES DE FILTRE",
-  "ShopNow": "ACHETEZ MAINTENANT"
+  "ShopNow": "ACHETEZ MAINTENANT",
+  "BackToShop": "Retour à la boutique",
+  "Color": "Couleur",
+  "InStock": "En Stock",
+  "Items": "articles",
+  "OutOfStock": "Rupture de stock",
+  "ProductDetails": "Détails du Produit",
+  "Size": "Taille",
+  "Material": "Matériau",
+  "Measurements": "Mesures",
+  "Origin": "Provenance",
+  "ProductCode": "Code Produit",
+  "UUID": "UUID",
+  "AddToCart": "Ajouter au Panier",
+  "ShareThisProduct": "Partager ce produit"
 }

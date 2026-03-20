@@ -18,8 +18,11 @@
     {
         <div class="details-wrapper">
             <div class="details-image-section">
-                <div class="details-image-container">
-                    <img src="@Model.Url" alt="@Model.Name" class="details-product-image">
+                <div class="details-image-container" id="imageContainer">
+                    <img src="@Model.Url" alt="@Model.Name" class="details-product-image" id="productImage">
+                    <div class="details-magnifier" id="magnifier">
+                        <div class="details-magnifier-glass" id="magnifierGlass"></div>
+                    </div>
                     @if (Model.Id == 1)
                     {
                         <div class="details-badge">SALE</div>
@@ -111,3 +114,53 @@
         </div>
     }
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageContainer = document.getElementById('imageContainer');
+    const productImage = document.getElementById('productImage');
+    const magnifier = document.getElementById('magnifier');
+    const magnifierGlass = document.getElementById('magnifierGlass');
+    
+    if (!imageContainer || !productImage || !magnifier || !magnifierGlass) return;
+    
+    const zoomLevel = 3;
+    const magnifierSize = 200;
+    const radius = magnifierSize / 2; // 100px
+    
+    imageContainer.addEventListener('mouseenter', function() {
+        magnifier.classList.add('active');
+    });
+    
+    imageContainer.addEventListener('mouseleave', function() {
+        magnifier.classList.remove('active');
+    });
+    
+    imageContainer.addEventListener('mousemove', function(e) {
+        if (!magnifier.classList.contains('active')) return;
+        
+        const rect = imageContainer.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+        
+        // Keep magnifier within bounds
+        x = Math.max(radius, Math.min(x, rect.width - radius));
+        y = Math.max(radius, Math.min(y, rect.height - radius));
+        
+        // Position magnifier centered on cursor
+        magnifier.style.left = x + 'px';
+        magnifier.style.top = y + 'px';
+        
+        // Update magnifier glass background
+        magnifierGlass.style.backgroundImage = 'url(' + productImage.src + ')';
+        magnifierGlass.style.backgroundSize = (rect.width * zoomLevel) + 'px ' + (rect.height * zoomLevel) + 'px';
+        
+        // Calculate proper background position
+        // The magnifier should show what's at cursor position (x,y) magnified
+        const bgPosX = -(x * zoomLevel - radius);
+        const bgPosY = -(y * zoomLevel - radius);
+        
+        magnifierGlass.style.backgroundPosition = bgPosX + 'px ' + bgPosY + 'px';
+    });
+});
+</script>

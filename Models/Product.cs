@@ -10,7 +10,7 @@ namespace kanimeclothing.Models
         public string? Color { get; set; }
         public string? Url { get; set; }
         public int Stock { get; set; }
-        public string? UUID { get; set; }
+        public string? Barcode { get; set; }
         public string? ProductCode { get; set; }
         public string? Material { get; set; }
         public string? Measurements { get; set; }

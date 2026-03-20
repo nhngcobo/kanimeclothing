@@ -8,6 +8,7 @@
 }
 
 <link rel="stylesheet" href="~/css/details.css" />
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 
 <div class="details-container">
     <div class="details-back-link">
@@ -35,7 +36,6 @@
 
                 <div class="details-category-rating">
                     <p class="details-category">@Model.Category</p>
-                    <p class="details-color">@Localizer["Color"]: <span>@Model.Color</span></p>
                 </div>
 
                 <div class="details-price-section">
@@ -54,11 +54,31 @@
 
                 <div class="details-section">
                     <h3 class="section-title">@Localizer["ProductDetails"]</h3>
+                    
+                    <div class="details-options">
+                        <div class="option-group">
+                            <label for="sizeSelect" class="option-label">@Localizer["Size"]:</label>
+                            <select id="sizeSelect" class="option-select">
+                                <option value="">@Localizer["SelectSize"]</option>
+                                <option value="S" selected="@(Model.Size == "S")">@Localizer["S"]</option>
+                                <option value="M" selected="@(Model.Size == "M")">@Localizer["M"]</option>
+                                <option value="L" selected="@(Model.Size == "L")">@Localizer["L"]</option>
+                                <option value="XL" selected="@(Model.Size == "XL")">@Localizer["XL"]</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="colorSelect" class="option-label">@Localizer["Color"]:</label>
+                            <select id="colorSelect" class="option-select">
+                                <option value="">@Localizer["SelectColor"]</option>
+                                <option value="Black" selected="@(Model.Color == "Black")">@Localizer["Black"]</option>
+                                <option value="White" selected="@(Model.Color == "White")">@Localizer["White"]</option>
+                                <option value="Grey" selected="@(Model.Color == "Grey")">@Localizer["Grey"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <table class="details-table">
-                        <tr>
-                            <td class="label">@Localizer["Size"]:</td>
-                            <td class="value">@Model.Size</td>
-                        </tr>
                         <tr>
                             <td class="label">@Localizer["Material"]:</td>
                             <td class="value">@Model.Material</td>
@@ -72,12 +92,10 @@
                             <td class="value">@Model.Origin</td>
                         </tr>
                         <tr>
-                            <td class="label">@Localizer["ProductCode"]:</td>
-                            <td class="value">@Model.ProductCode</td>
-                        </tr>
-                        <tr>
-                            <td class="label">@Localizer["UUID"]:</td>
-                            <td class="value uuid">@Model.UUID</td>
+                            <td class="label">@Localizer["Barcode"]:</td>
+                            <td class="value">
+                                <svg id="barcode"></svg>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -116,7 +134,21 @@
 </div>
 
 <script>
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Generate barcode
+    // Initialize barcode if available
+    const barcodeValue = '@Model?.Barcode';
+    if (barcodeValue && typeof JsBarcode !== 'undefined') {
+        JsBarcode("#barcode", barcodeValue, {
+            format: "CODE128",
+            width: 2,
+            height: 50,
+            displayValue: true,
+            fontSize: 12
+        });
+    }
+    // Image magnifier functionality
     const imageContainer = document.getElementById('imageContainer');
     const productImage = document.getElementById('productImage');
     const magnifier = document.getElementById('magnifier');
@@ -126,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const zoomLevel = 3;
     const magnifierSize = 200;
-    const radius = magnifierSize / 2; // 100px
+    const radius = magnifierSize / 2;
     
     imageContainer.addEventListener('mouseenter', function() {
         magnifier.classList.add('active');

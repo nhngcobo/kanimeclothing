@@ -1,0 +1,99 @@
+﻿@using kanimeclothing.Services
+@inject ILocalizationService Localizer
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="homepage-slideshow">
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="~/images/HomepageSlide1.jpg" alt="Slide 1">
+        </div>
+        <div class="slide fade">
+            <img src="~/images/HomepageSlide2.jpg" alt="Slide 2">
+        </div>
+        <div class="slide fade">
+            <img src="~/images/HomepageSlide3.jpg" alt="Slide 3">
+        </div>
+        <div class="slide fade">
+            <img src="~/images/HomepageSlide4.jpg" alt="Slide 4">
+        </div>
+
+        <div class="slide-overlay">
+            <p class="slide-text">@Localizer["HomeSlideMessage"]</p>
+        </div>
+
+        <div class="dots-container">
+            <span class="dot" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let slideIndex = 0;
+    let autoSlideTimer = null;
+
+    function currentSlide(n) {
+        let slides = document.getElementsByClassName("slide");
+        let dots = document.getElementsByClassName("dot");
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            slides[i].classList.remove("active");
+        }
+
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].classList.remove("active");
+        }
+
+        slides[n].style.display = "block";
+        slides[n].classList.add("active");
+        dots[n].classList.add("active");
+        slideIndex = n;
+
+        // Reset the auto-slide timer when manually changing slides
+        stopAutoSlide();
+        startAutoSlide();
+    }
+
+    function nextSlide() {
+        let slides = document.getElementsByClassName("slide");
+        let next = (slideIndex + 1) % slides.length;
+        currentSlide(next);
+    }
+
+    function startAutoSlide() {
+        autoSlideTimer = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideTimer) {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = null;
+        }
+    }
+
+    // Show the first slide when page loads
+    document.addEventListener("DOMContentLoaded", function() {
+        currentSlide(0);
+        
+        // Get the slideshow container and add hover listeners
+        let slideshowContainer = document.querySelector(".slideshow-container");
+        
+        slideshowContainer.addEventListener("mouseenter", function() {
+            stopAutoSlide();
+        });
+
+        slideshowContainer.addEventListener("mouseleave", function() {
+            startAutoSlide();
+        });
+
+        // Start auto-slide initially
+        startAutoSlide();
+    });
+</script>

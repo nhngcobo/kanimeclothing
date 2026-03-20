@@ -1,0 +1,234 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "category": "Men",
+      "name": "Leather Oxford Jacket",
+      "price": 285.00,
+      "size": "M",
+      "color": "Black",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 12
+    },
+    {
+      "id": 2,
+      "category": "Men",
+      "name": "Leather Jacket",
+      "price": 600.00,
+      "size": "L",
+      "color": "Brown",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 8
+    },
+    {
+      "id": 3,
+      "category": "Women",
+      "name": "Leather Jacket",
+      "price": 750.00,
+      "size": "S",
+      "color": "Tan",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 5
+    },
+    {
+      "id": 4,
+      "category": "Men",
+      "name": "Classic Denim Jacket",
+      "price": 320.00,
+      "size": "M",
+      "color": "Blue",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 15
+    },
+    {
+      "id": 5,
+      "category": "Men",
+      "name": "Wool Blazer",
+      "price": 450.00,
+      "size": "L",
+      "color": "Charcoal",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 10
+    },
+    {
+      "id": 6,
+      "category": "Women",
+      "name": "Suede Jacket",
+      "price": 680.00,
+      "size": "M",
+      "color": "Caramel",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 7
+    },
+    {
+      "id": 7,
+      "category": "Women",
+      "name": "Cropped Denim",
+      "price": 280.00,
+      "size": "S",
+      "color": "Light Blue",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 20
+    },
+    {
+      "id": 8,
+      "category": "Men",
+      "name": "Bomber Jacket",
+      "price": 550.00,
+      "size": "XL",
+      "color": "Navy",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 9
+    },
+    {
+      "id": 9,
+      "category": "Women",
+      "name": "Faux Fur Coat",
+      "price": 890.00,
+      "size": "M",
+      "color": "White",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 4
+    },
+    {
+      "id": 10,
+      "category": "Kids",
+      "name": "Adventure Jacket",
+      "price": 180.00,
+      "size": "8-10Y",
+      "color": "Red",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 18
+    },
+    {
+      "id": 11,
+      "category": "Kids",
+      "name": "Windbreaker",
+      "price": 150.00,
+      "size": "10-12Y",
+      "color": "Green",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 25
+    },
+    {
+      "id": 12,
+      "category": "Kids",
+      "name": "Puffer Jacket",
+      "price": 220.00,
+      "size": "6-8Y",
+      "color": "Black",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 14
+    },
+    {
+      "id": 13,
+      "category": "Accessories",
+      "name": "Leather Belt",
+      "price": 85.00,
+      "size": "One Size",
+      "color": "Black",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 35
+    },
+    {
+      "id": 14,
+      "category": "Accessories",
+      "name": "Wool Scarf",
+      "price": 95.00,
+      "size": "One Size",
+      "color": "Burgundy",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 28
+    },
+    {
+      "id": 15,
+      "category": "Accessories",
+      "name": "Leather Gloves",
+      "price": 120.00,
+      "size": "M",
+      "color": "Brown",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 16
+    },
+    {
+      "id": 16,
+      "category": "Men",
+      "name": "Trench Coat",
+      "price": 720.00,
+      "size": "L",
+      "color": "Beige",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 6
+    },
+    {
+      "id": 17,
+      "category": "Women",
+      "name": "Denim Overalls",
+      "price": 310.00,
+      "size": "M",
+      "color": "Dark Blue",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 11
+    },
+    {
+      "id": 18,
+      "category": "Women",
+      "name": "Leather Vest",
+      "price": 420.00,
+      "size": "S",
+      "color": "Black",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 9
+    },
+    {
+      "id": 19,
+      "category": "Men",
+      "name": "Cotton Cardigan",
+      "price": 210.00,
+      "size": "M",
+      "color": "Gray",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 22
+    },
+    {
+      "id": 20,
+      "category": "Kids",
+      "name": "Denim Overalls",
+      "price": 160.00,
+      "size": "8-10Y",
+      "color": "Blue",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 17
+    },
+    {
+      "id": 21,
+      "category": "Accessories",
+      "name": "Baseball Cap",
+      "price": 55.00,
+      "size": "One Size",
+      "color": "Black",
+      "imageName": "HomepageSlide3.jpg",
+      "stock": 40
+    },
+    {
+      "id": 22,
+      "category": "Men",
+      "name": "Slim Fit Chinos",
+      "price": 185.00,
+      "size": "32",
+      "color": "Khaki",
+      "imageName": "HomepageSlide1.jpg",
+      "stock": 19
+    },
+    {
+      "id": 23,
+      "category": "Women",
+      "name": "High-Waisted Jeans",
+      "price": 290.00,
+      "size": "8",
+      "color": "Black",
+      "imageName": "HomepageSlide2.jpg",
+      "stock": 13
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+@using kanimeclothing.Services
+@using kanimeclothing.Models
+@inject ILocalizationService Localizer
+@model List<Product>
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<div class="shop-container">
+    <h1 class="shop-title">@Localizer["OurShop"]</h1>
+
+    <div class="shop-filters">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">@Localizer["All"]</button>
+            <button class="filter-btn" data-filter="Men">@Localizer["Men"]</button>
+            <button class="filter-btn" data-filter="Women">@Localizer["Women"]</button>
+            <button class="filter-btn" data-filter="Kids">@Localizer["Kids"]</button>
+            <button class="filter-btn" data-filter="Accessories">@Localizer["Accessories"]</button>
+        </div>
+
+        <div class="filter-dropdown">
+            <select class="filter-select" id="priceSort">
+                <option value="">@Localizer["TypesOfFilter"]</option>
+                <option value="low-to-high">Price: Low to High</option>
+                <option value="high-to-low">Price: High to Low</option>
+                <option value="newest">Newest</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="products-grid">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var product in Model)
+            {
+                <div class="product-card" data-category="@product.Category" data-price="@product.Price" data-id="@product.Id">
+                    <div class="product-image-container">
+                        <img src="~/images/@product.ImageName" alt="@product.Name" class="product-image">
+                        @if (product.Id == 1)
+                        {
+                            <div class="product-badge">SALE</div>
+                        }
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">@product.Name</h3>
+                        <p class="product-category">@product.Category - @product.Color</p>
+                        <p class="product-details">Size: @product.Size</p>
+                        <p class="product-stock">Stock: <strong>@product.Stock</strong></p>
+                        <p class="product-price">R@(product.Price.ToString("F2"))</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No products available.</p>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const productGrid = document.querySelector('.products-grid');
+        const priceSort = document.getElementById('priceSort');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+                const visibleCards = document.querySelectorAll('.product-card[style=""]');
+
+                document.querySelectorAll('.product-card').forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const category = card.getAttribute('data-category');
+                        card.style.display = category === filterValue ? 'block' : 'none';
+                    }
+                });
+
+                priceSort.value = '';
+            });
+        });
+
+        priceSort.addEventListener('change', function() {
+            const sortValue = this.value;
+            const cards = Array.from(document.querySelectorAll('.product-card'));
+
+            if (sortValue === '') {
+                cards.sort((a, b) => parseInt(a.dataset.id) - parseInt(b.dataset.id));
+            } else if (sortValue === 'low-to-high') {
+                cards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+            } else if (sortValue === 'high-to-low') {
+                cards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+            } else if (sortValue === 'newest') {
+                cards.sort((a, b) => parseInt(b.dataset.id) - parseInt(a.dataset.id));
+            }
+
+            cards.forEach(card => {
+                productGrid.appendChild(card);
+            });
+        });
+    });
+</script>

@@ -1,23 +1,13 @@
 {
   "products": [
     {
-      "id": 1,
-      "category": "Men",
-      "name": "Leather Oxford Jacket",
-      "price": 285.00,
-      "size": "M",
-      "color": "Black",
-      "imageName": "HomepageSlide1.jpg",
-      "stock": 12
-    },
-    {
       "id": 2,
       "category": "Men",
       "name": "Leather Jacket",
       "price": 600.00,
       "size": "L",
       "color": "Brown",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774015748/letherJacket_aqerpr.webp",
       "stock": 8
     },
     {
@@ -27,7 +17,7 @@
       "price": 750.00,
       "size": "S",
       "color": "Tan",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774015901/women_leatherJacket_alzwuw.jpg",
       "stock": 5
     },
     {
@@ -37,7 +27,7 @@
       "price": 320.00,
       "size": "M",
       "color": "Blue",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016042/denimJacketMen_vg7vyy.jpg",
       "stock": 15
     },
     {
@@ -47,7 +37,7 @@
       "price": 450.00,
       "size": "L",
       "color": "Charcoal",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018374/wool_blazer_rz4unr.webp",
       "stock": 10
     },
     {
@@ -57,7 +47,7 @@
       "price": 680.00,
       "size": "M",
       "color": "Caramel",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016163/SuedeJacket_f92n36.jpg",
       "stock": 7
     },
     {
@@ -67,7 +57,7 @@
       "price": 280.00,
       "size": "S",
       "color": "Light Blue",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013884/demin_jacket_women_otherImage1_xpzxqq.jpg",
       "stock": 20
     },
     {
@@ -77,7 +67,7 @@
       "price": 550.00,
       "size": "XL",
       "color": "Navy",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016248/BomberJacket_Men_qkx71p.webp",
       "stock": 9
     },
     {
@@ -87,7 +77,7 @@
       "price": 890.00,
       "size": "M",
       "color": "White",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013883/faux_fur_coat_yjyuu9.jpg",
       "stock": 4
     },
     {
@@ -97,17 +87,17 @@
       "price": 180.00,
       "size": "8-10Y",
       "color": "Red",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018847/outdoorJacket_wmhfgh.png",
       "stock": 18
     },
     {
       "id": 11,
       "category": "Kids",
-      "name": "Windbreaker",
+      "name": "Poplin dress",
       "price": 150.00,
       "size": "10-12Y",
       "color": "Green",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016449/Sunndy_dress_d9v3wa.jpg",
       "stock": 25
     },
     {
@@ -117,7 +107,7 @@
       "price": 220.00,
       "size": "6-8Y",
       "color": "Black",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774018624/puffer_jacket_zel5xu.jpg",
       "stock": 14
     },
     {
@@ -127,7 +117,7 @@
       "price": 85.00,
       "size": "One Size",
       "color": "Black",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016506/belt_wzn8hu.jpg",
       "stock": 35
     },
     {
@@ -137,27 +127,27 @@
       "price": 95.00,
       "size": "One Size",
       "color": "Burgundy",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013873/wool_scarf_lsr65p.jpg",
       "stock": 28
     },
     {
       "id": 15,
       "category": "Accessories",
-      "name": "Leather Gloves",
-      "price": 120.00,
+      "name": "Casio Watch",
+      "price": 1200.00,
       "size": "M",
       "color": "Brown",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774019201/watch_g12xua.webp",
       "stock": 16
     },
     {
       "id": 16,
-      "category": "Men",
-      "name": "Trench Coat",
+      "category": "Kids",
+      "name": "Collared Puffer Jacket",
       "price": 720.00,
       "size": "L",
       "color": "Beige",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774019028/collaredJacket_bqzkwo.png",
       "stock": 6
     },
     {
@@ -167,18 +157,8 @@
       "price": 310.00,
       "size": "M",
       "color": "Dark Blue",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013870/denim_overalls_yd6s9m.png",
       "stock": 11
-    },
-    {
-      "id": 18,
-      "category": "Women",
-      "name": "Leather Vest",
-      "price": 420.00,
-      "size": "S",
-      "color": "Black",
-      "imageName": "HomepageSlide3.jpg",
-      "stock": 9
     },
     {
       "id": 19,
@@ -187,17 +167,17 @@
       "price": 210.00,
       "size": "M",
       "color": "Gray",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016640/cardigan_men_k9swse.jpg",
       "stock": 22
     },
     {
       "id": 20,
       "category": "Kids",
-      "name": "Denim Overalls",
+      "name": "Floral-Print Leggings",
       "price": 160.00,
       "size": "8-10Y",
       "color": "Blue",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016810/leggin_kids_bxh9vu.jpg",
       "stock": 17
     },
     {
@@ -207,7 +187,7 @@
       "price": 55.00,
       "size": "One Size",
       "color": "Black",
-      "imageName": "HomepageSlide3.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774016929/cap_jkmhqg.webp",
       "stock": 40
     },
     {
@@ -217,7 +197,7 @@
       "price": 185.00,
       "size": "32",
       "color": "Khaki",
-      "imageName": "HomepageSlide1.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013824/chino_men_l8ytai.jpg",
       "stock": 19
     },
     {
@@ -227,7 +207,7 @@
       "price": 290.00,
       "size": "8",
       "color": "Black",
-      "imageName": "HomepageSlide2.jpg",
+      "url": "https://res.cloudinary.com/ddpphpv81/image/upload/v1774013896/high-waistOtherImage1_nf8pkr.jpg",
       "stock": 13
     }
   ]

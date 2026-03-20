@@ -36,7 +36,7 @@
             {
                 <div class="product-card" data-category="@product.Category" data-price="@product.Price" data-id="@product.Id">
                     <div class="product-image-container">
-                        <img src="~/images/@product.ImageName" alt="@product.Name" class="product-image">
+                        <img src="@product.Url" alt="@product.Name" class="product-image">
                         @if (product.Id == 1)
                         {
                             <div class="product-badge">SALE</div>

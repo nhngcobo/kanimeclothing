@@ -8,10 +8,19 @@ namespace kanimeclothing.Controllers
     public class HomeController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICartService _cartService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductService productService, ICartService cartService)
         {
             _productService = productService;
+            _cartService = cartService;
+        }
+
+        public override void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            var cart = _cartService.GetCart(HttpContext.Session);
+            ViewData["CartItemCount"] = cart.ItemCount;
         }
         public IActionResult Index()
         {
@@ -105,6 +114,41 @@ namespace kanimeclothing.Controllers
             ViewBag.RelatedProducts = relatedProducts;
             ViewBag.ProductReviews = reviews;
             return View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId, string? size, string? color, int quantity = 1)
+        {
+            var product = await _productService.GetProductByIdAsync(productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            
+            _cartService.AddToCart(HttpContext.Session, product, size, color, quantity);
+            
+            return RedirectToAction("ViewCart");
+        }
+
+        public IActionResult ViewCart()
+        {
+            var cart = _cartService.GetCart(HttpContext.Session);
+            return View(cart);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromCart(int productId, string? size, string? color)
+        {
+            _cartService.RemoveFromCart(HttpContext.Session, productId, size, color);
+            
+            return RedirectToAction("ViewCart");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCart(int productId, string? size, string? color, int quantity)
+        {
+            _cartService.UpdateCartQuantity(HttpContext.Session, productId, size, color, quantity);
+            return RedirectToAction("ViewCart");
         }
 
         public IActionResult Contact()

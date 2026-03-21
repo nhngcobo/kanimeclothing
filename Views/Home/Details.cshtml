@@ -100,16 +100,22 @@
                 </div>
 
                 <div class="details-actions">
-                    <button class="add-to-cart-btn" disabled="@(Model.Stock <= 0 ? "disabled" : "")">
-                        @if (Model.Stock > 0)
-                        {
-                            <span>@Localizer["AddToCart"]</span>
-                        }
-                        else
-                        {
-                            <span>@Localizer["OutOfStock"]</span>
-                        }
-                    </button>
+                    <form method="post" asp-action="AddToCart" class="add-to-cart-form">
+                        <input type="hidden" name="productId" value="@Model.Id">
+                        <input type="hidden" name="size" id="selectedSize">
+                        <input type="hidden" name="color" id="selectedColor">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="add-to-cart-btn" @(Model.Stock <= 0 ? "disabled" : "")>
+                            @if (Model.Stock > 0)
+                            {
+                                <span>@Localizer["AddToCart"]</span>
+                            }
+                            else
+                            {
+                                <span>@Localizer["OutOfStock"]</span>
+                            }
+                        </button>
+                    </form>
                 </div>
 
                 <div class="details-share">
@@ -203,8 +209,21 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             sizeButtons.forEach(btn => btn.classList.remove('selected'));
             this.classList.add('selected');
+            document.getElementById('selectedSize').value = this.dataset.size;
         });
     });
+
+    // Initialize color selector
+    const colorSelect = document.getElementById('colorSelect');
+    if (colorSelect) {
+        colorSelect.addEventListener('change', function() {
+            document.getElementById('selectedColor').value = this.value;
+        });
+        // Set initial color
+        if (colorSelect.value) {
+            document.getElementById('selectedColor').value = colorSelect.value;
+        }
+    }
 
     // Generate barcode
     // Initialize barcode if available

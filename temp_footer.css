@@ -1,0 +1,177 @@
+﻿/* Modern Footer Styles */
+.modern-footer {
+    background: #ffffff;
+    color: #000000;
+    border-top: 1px solid #dee2e6;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-top: auto;
+}
+
+.modern-footer .footer-brand {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 1rem;
+}
+
+.modern-footer .footer-heading {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.modern-footer .footer-links {
+    padding: 0;
+}
+
+.modern-footer .footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.modern-footer .footer-links a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.modern-footer .footer-links a:hover {
+    color: #000000;
+    transform: translateX(5px);
+}
+
+.modern-footer .footer-contact li {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.modern-footer .footer-contact i {
+    color: #6c757d;
+    width: 16px;
+}
+
+.modern-footer .social-links {
+    margin-top: 1rem;
+}
+
+.modern-footer .social-link {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 50%;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border: 1px solid #dee2e6;
+}
+
+.modern-footer .social-link:hover {
+    background: #000000;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modern-footer .newsletter-signup .input-group {
+    max-width: 300px;
+}
+
+.modern-footer .newsletter-signup .form-control {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    color: #000000;
+    border-radius: 25px 0 0 25px;
+    font-weight: 500;
+}
+
+.modern-footer .newsletter-signup .form-control::placeholder {
+    color: #6c757d;
+}
+
+.modern-footer .newsletter-signup .form-control:focus {
+    background: #ffffff;
+    border-color: #000000;
+    color: #000000;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+.modern-footer .newsletter-signup .btn-dark {
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: 0 25px 25px 0;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.modern-footer .newsletter-signup .btn-dark:hover {
+    background: #333333;
+    border-color: #333333;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modern-footer hr {
+    border-color: #dee2e6;
+    margin: 2rem 0;
+}
+
+.modern-footer .footer-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.modern-footer .footer-link:hover {
+    color: #000000;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .modern-footer .row > div {
+        margin-bottom: 2rem;
+    }
+
+    .modern-footer .newsletter-signup .input-group {
+        max-width: 100%;
+    }
+
+    .modern-footer .newsletter-signup .form-control,
+    .modern-footer .newsletter-signup .btn-dark {
+        border-radius: 0 !important;
+    }
+
+    .modern-footer .newsletter-signup .form-control {
+        border-radius: 25px 25px 0 0 !important;
+    }
+
+    .modern-footer .newsletter-signup .btn-dark {
+        border-radius: 0 0 25px 25px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .modern-footer .col-md-6.text-md-end {
+        text-align: start !important;
+        margin-top: 1rem;
+    }
+
+    .modern-footer .social-link {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 0.9rem;
+    }
+}

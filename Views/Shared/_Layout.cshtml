@@ -33,8 +33,15 @@
                     <a class="nav-link text-black fw-500" href="#" title="User Account">
                         <i class="bi bi-person"></i>
                     </a>
-                    <a class="nav-link text-black fw-500" href="#" title="Shopping Cart">
+                    <a class="nav-link text-black fw-500 position-relative" asp-area="" asp-controller="Home" asp-action="ViewCart" title="Shopping Cart">
                         <i class="bi bi-bag"></i>
+                        @if (ViewData["CartItemCount"] != null && (int)ViewData["CartItemCount"] > 0)
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                @ViewData["CartItemCount"]
+                                <span class="visually-hidden">items in cart</span>
+                            </span>
+                        }
                     </a>
                 </div>
             </div>
@@ -46,9 +53,79 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - kanimeclothing - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="site-footer-divider"></div>
+    <footer class="site-footer">
+        <div class="container py-5" style="max-width: 80rem;">
+            <div class="row g-4">
+                <!-- Brand Section -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="site-footer__brand text-black fw-500 mb-3">KANIMECLOTHING</h5>
+                    <p class="text-muted mb-3">Your ultimate destination for anime-inspired fashion. Discover unique designs that bring your favorite characters to life.</p>
+                    <div class="site-footer__social-links">
+                        <a href="#" class="site-footer__social-link me-3" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="site-footer__social-link me-3" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="site-footer__social-link me-3" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="site-footer__social-link me-3" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="site-footer__heading text-black fw-500 mb-3">Quick Links</h6>
+                    <ul class="site-footer__nav-list list-unstyled">
+                        <li><a class="site-footer__nav-link text-muted fw-500" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" asp-area="" asp-controller="Home" asp-action="Categories">Categories</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" asp-area="" asp-controller="Home" asp-action="Shop">Shop</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="site-footer__heading text-black fw-500 mb-3">Customer Service</h6>
+                    <ul class="site-footer__nav-list list-unstyled">
+                        <li><a class="site-footer__nav-link text-muted fw-500" href="#">Size Guide</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" href="#">Shipping Info</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" href="#">Returns & Exchanges</a></li>
+                        <li><a class="site-footer__nav-link text-muted fw-500" href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="site-footer__heading text-black fw-500 mb-3">Stay Updated</h6>
+                    <p class="text-muted mb-3">Subscribe to get special offers and new arrivals!</p>
+                    <div class="site-footer__newsletter">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email address">
+                            <button class="btn btn-dark fw-500" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="site-footer__heading text-black fw-500 mb-3">Contact Us</h6>
+                    <ul class="site-footer__contact-list list-unstyled">
+                        <li class="site-footer__contact-item text-muted fw-500"><i class="fas fa-envelope me-2"></i>support@kanimeclothing.com</li>
+                        <li class="site-footer__contact-item text-muted fw-500"><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li class="site-footer__contact-item text-muted fw-500"><i class="fas fa-map-marker-alt me-2"></i>123 Anime Street, Tokyo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted fw-500 mb-0">&copy; 2026 KANIMECLOTHING. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="site-footer__legal-link text-muted fw-500 me-3">Privacy Policy</a>
+                    <a href="#" class="site-footer__legal-link text-muted fw-500 me-3">Terms of Service</a>
+                    <a href="#" class="site-footer__legal-link text-muted fw-500">Cookie Policy</a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

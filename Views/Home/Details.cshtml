@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
         magnifierGlass.style.backgroundSize = (rect.width * zoomLevel) + 'px ' + (rect.height * zoomLevel) + 'px';
         
         // Calculate proper background position
-        // The magnifier should show what's at cursor position (x,y) magnified
         const bgPosX = -(x * zoomLevel - radius);
         const bgPosY = -(y * zoomLevel - radius);
         

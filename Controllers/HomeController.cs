@@ -67,6 +67,19 @@ namespace kanimeclothing.Controllers
             {
                 return NotFound();
             }
+            
+            // Get all products to find related items
+            var allProducts = await _productService.GetProductsAsync();
+            
+            // Get 2 related products - prioritize same category
+            var relatedProducts = allProducts
+                .Where(p => p.Id != id)
+                .OrderByDescending(p => p.Category == product.Category)
+                .ThenBy(p => p.Id)
+                .Take(2)
+                .ToList();
+            
+            ViewBag.RelatedProducts = relatedProducts;
             return View(product);
         }
 

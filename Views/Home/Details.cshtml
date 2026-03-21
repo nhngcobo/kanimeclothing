@@ -130,6 +130,32 @@
             <a href="@Url.Action("Shop", "Home")" class="back-link">Go back to shop</a>
         </div>
     }
+
+    @if (ViewBag.RelatedProducts != null && ViewBag.RelatedProducts.Count > 0)
+    {
+        <div class="related-products-section">
+            <h2 class="related-title">You might also like</h2>
+            <div class="related-products-grid">
+                @foreach (var relatedProduct in ViewBag.RelatedProducts)
+                {
+                    <a asp-action="Details" asp-controller="Home" asp-route-id="@relatedProduct.Id" class="related-product-card">
+                        <div class="related-product-image-container">
+                            <img src="@relatedProduct.Url" alt="@relatedProduct.Name" class="related-product-image">
+                            @if (relatedProduct.Id == 1)
+                            {
+                                <div class="related-product-badge">SALE</div>
+                            }
+                        </div>
+                        <div class="related-product-info">
+                            <h3 class="related-product-name">@relatedProduct.Name</h3>
+                            <p class="related-product-brand">@relatedProduct.Category</p>
+                            <p class="related-product-price">R@(relatedProduct.Price.ToString("F2"))</p>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    }
 </div>
 
 <script>

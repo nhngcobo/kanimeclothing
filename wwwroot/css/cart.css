@@ -11,6 +11,18 @@
   color: #000;
 }
 
+.back-link {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.back-link:hover {
+  color: #000;
+}
+
 .cart-title {
   font-size: 2.5rem;
   font-weight: 400;

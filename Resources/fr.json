@@ -36,5 +36,18 @@
   "M": "M",
   "L": "L",
   "XL": "XL",
-  "2XL": "2XL"
+  "2XL": "2XL",
+  "BrandName": "KANIMECLOTHING",
+  "BrandDescription": "Votre destination ultime pour la mode inspirée de l'anime. Découvrez des designs uniques qui donnent vie à vos personnages préférés.",
+  "QuickLinks": "Liens Rapides",
+  "CustomerService": "Service Client",
+  "StayUpdated": "Restez Informé",
+  "StayUpdatedDescription": "Abonnez-vous pour recevoir des offres spéciales et des nouveaux arrivages !",
+  "ContactUs": "Nous Contacter",
+  "SupportEmail": "support@kanimeclothing.com",
+  "SupportPhone": "+27 (000) 000-000",
+  "Copyright": "© 2026 KANIMECLOTHING. Tous droits réservés.",
+  "PrivacyPolicy": "Politique de Confidentialité",
+  "TermsOfService": "Conditions d'Utilisation",
+  "CookiePolicy": "Politique des Cookies"
 }

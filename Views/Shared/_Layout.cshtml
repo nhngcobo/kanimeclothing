@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/kanimeclothing.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @using kanimeclothing.Services
+    @inject ILocalizationService Localizer
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -58,8 +60,8 @@
         <div class="container py-5" style="max-width: 80rem;">
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
-                    <h5 class="site-footer__brand">KANIMECLOTHING</h5>
-                    <p class="site-footer__description">Your ultimate destination for anime-inspired fashion. Discover unique designs that bring your favorite characters to life.</p>
+                    <h5 class="site-footer__brand">@Localizer["BrandName"]</h5>
+                    <p class="site-footer__description">@Localizer["BrandDescription"]</p>
                     <div class="site-footer__social-links">
                         <a href="#" class="site-footer__social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
                         <a href="#" class="site-footer__social-link" title="Instagram"><i class="bi bi-instagram"></i></i></a>
@@ -69,7 +71,7 @@
                 </div>
 
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="site-footer__heading">Quick Links</h6>
+                    <h6 class="site-footer__heading">@Localizer["QuickLinks"]</h6>
                     <ul class="site-footer__nav-list list-unstyled">
                         <li><a class="site-footer__nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a class="site-footer__nav-link" asp-area="" asp-controller="Home" asp-action="Categories">Categories</a></li>
@@ -79,7 +81,7 @@
                 </div>
 
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="site-footer__heading">Customer Service</h6>
+                    <h6 class="site-footer__heading">@Localizer["CustomerService"]</h6>
                     <ul class="site-footer__nav-list list-unstyled">
                         <li><a class="site-footer__nav-link" asp-area="" asp-controller="Home" asp-action="">Size Guide</a></li>
                         <li><a class="site-footer__nav-link" asp-area="" asp-controller="Home" asp-action="">Shipping Info</a></li>
@@ -89,8 +91,8 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="site-footer__heading">Stay Updated</h6>
-                    <p class="site-footer__description">Subscribe to get special offers and new arrivals!</p>
+                    <h6 class="site-footer__heading">@Localizer["StayUpdated"]</h6>
+                    <p class="site-footer__description">@Localizer["StayUpdatedDescription"]</p>
                     <div class="site-footer__newsletter">
                         <div class="input-group">
                             <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email address">
@@ -100,10 +102,10 @@
                 </div>
 
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="site-footer__heading">Contact Us</h6>
+                    <h6 class="site-footer__heading">@Localizer["ContactUs"]</h6>
                     <ul class="site-footer__contact-list list-unstyled">
-                        <li class="site-footer__contact-item">support@kanimeclothing.com</li>
-                        <li class="site-footer__contact-item"><i class="fas fa-phone"></i>+27 (000) 000-000</li>
+                        <li class="site-footer__contact-item">@Localizer["SupportEmail"]</li>
+                        <li class="site-footer__contact-item"><i class="fas fa-phone"></i>@Localizer["SupportPhone"]</li>
                     </ul>
                 </div>
             </div>
@@ -111,12 +113,12 @@
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p class="site-footer__copyright">&copy; 2026 KANIMECLOTHING. All rights reserved.</p>
+                    <p class="site-footer__copyright">@Localizer["Copyright"]</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="site-footer__legal-link">Privacy Policy</a>
-                    <a href="#" class="site-footer__legal-link">Terms of Service</a>
-                    <a href="#" class="site-footer__legal-link">Cookie Policy</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="site-footer__legal-link">@Localizer["PrivacyPolicy"]</a>
+                    <a href="#" class="site-footer__legal-link">@Localizer["TermsOfService"]</a>
+                    <a href="#" class="site-footer__legal-link">@Localizer["CookiePolicy"]</a>
                 </div>
             </div>
         </div>

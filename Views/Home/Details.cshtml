@@ -131,6 +131,38 @@
         </div>
     }
 
+    @if (ViewBag.ProductReviews != null && ViewBag.ProductReviews.Count > 0)
+    {
+        <div class="reviews-section">
+            <h2 class="reviews-title">Customer Reviews</h2>
+            <div class="reviews-container">
+                @foreach (var review in ViewBag.ProductReviews)
+                {
+                    <div class="review-card">
+                        <div class="review-header">
+                            <h3 class="review-author">@review.ReviewerName</h3>
+                            <div class="review-rating">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    if (i < review.Rating)
+                                    {
+                                        <span class="star filled">★</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="star">☆</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <p class="review-text">@review.ReviewText</p>
+                        <p class="review-date">@review.CreatedDate.ToString("MMMM dd, yyyy")</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
     @if (ViewBag.RelatedProducts != null && ViewBag.RelatedProducts.Count > 0)
     {
         <div class="related-products-section">

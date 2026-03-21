@@ -79,7 +79,31 @@ namespace kanimeclothing.Controllers
                 .Take(2)
                 .ToList();
             
+            // Add sample reviews for each product
+            var reviews = new List<ProductReview>
+            {
+                new ProductReview
+                {
+                    Id = 1,
+                    ProductId = id,
+                    ReviewerName = "Sarah M.",
+                    ReviewText = "Amazing quality! The product exceeded my expectations. Highly recommend to everyone.",
+                    Rating = 5,
+                    CreatedDate = DateTime.Now.AddDays(-15)
+                },
+                new ProductReview
+                {
+                    Id = 2,
+                    ProductId = id,
+                    ReviewerName = "John D.",
+                    ReviewText = "Great product with excellent service. Will definitely purchase again.",
+                    Rating = 4,
+                    CreatedDate = DateTime.Now.AddDays(-8)
+                }
+            };
+            
             ViewBag.RelatedProducts = relatedProducts;
+            ViewBag.ProductReviews = reviews;
             return View(product);
         }
 

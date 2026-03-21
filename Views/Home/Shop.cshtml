@@ -12,19 +12,40 @@
 
     <div class="shop-filters">
         <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">@Localizer["All"]</button>
-            <button class="filter-btn" data-filter="Men">@Localizer["Men"]</button>
-            <button class="filter-btn" data-filter="Women">@Localizer["Women"]</button>
-            <button class="filter-btn" data-filter="Kids">@Localizer["Kids"]</button>
-            <button class="filter-btn" data-filter="Accessories">@Localizer["Accessories"]</button>
+            <a asp-action="Shop" asp-route-category="all" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(string.IsNullOrEmpty(ViewBag.SelectedCategory) ? "active" : "")">@Localizer["All"]</a>
+            <a asp-action="Shop" asp-route-category="Men" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Men" ? "active" : "")">@Localizer["Men"]</a>
+            <a asp-action="Shop" asp-route-category="Women" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Women" ? "active" : "")">@Localizer["Women"]</a>
+            <a asp-action="Shop" asp-route-category="Kids" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Kids" ? "active" : "")">@Localizer["Kids"]</a>
+            <a asp-action="Shop" asp-route-category="Accessories" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Accessories" ? "active" : "")">@Localizer["Accessories"]</a>
         </div>
 
         <div class="filter-dropdown">
-            <select class="filter-select" id="priceSort">
-                <option value="">@Localizer["TypesOfFilter"]</option>
-                <option value="low-to-high">Price: Low to High</option>
-                <option value="high-to-low">Price: High to Low</option>
-                <option value="newest">Newest</option>
+            <select class="filter-select" id="priceSort" onchange="window.location.href = this.options[this.selectedIndex].value">
+                <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory })">@Localizer["TypesOfFilter"]</option>
+                @if (ViewBag.SelectedSort == "low-to-high")
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "low-to-high" })" selected>Price: Low to High</option>
+                }
+                else
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "low-to-high" })">Price: Low to High</option>
+                }
+                @if (ViewBag.SelectedSort == "high-to-low")
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "high-to-low" })" selected>Price: High to Low</option>
+                }
+                else
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "high-to-low" })">Price: High to Low</option>
+                }
+                @if (ViewBag.SelectedSort == "newest")
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "newest" })" selected>Newest</option>
+                }
+                else
+                {
+                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "newest" })">Newest</option>
+                }
             </select>
         </div>
     </div>
@@ -58,52 +79,3 @@
         }
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const productGrid = document.querySelector('.products-grid');
-        const priceSort = document.getElementById('priceSort');
-        const productCards = document.querySelectorAll('.product-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-
-                const filterValue = this.getAttribute('data-filter');
-                const visibleCards = document.querySelectorAll('.product-card[style=""]');
-
-                document.querySelectorAll('.product-card').forEach(card => {
-                    if (filterValue === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const category = card.getAttribute('data-category');
-                        card.style.display = category === filterValue ? 'block' : 'none';
-                    }
-                });
-
-                priceSort.value = '';
-            });
-        });
-
-        priceSort.addEventListener('change', function() {
-            const sortValue = this.value;
-            const cards = Array.from(document.querySelectorAll('.product-card'));
-
-            if (sortValue === '') {
-                cards.sort((a, b) => parseInt(a.dataset.id) - parseInt(b.dataset.id));
-            } else if (sortValue === 'low-to-high') {
-                cards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
-            } else if (sortValue === 'high-to-low') {
-                cards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
-            } else if (sortValue === 'newest') {
-                cards.sort((a, b) => parseInt(b.dataset.id) - parseInt(a.dataset.id));
-            }
-
-            cards.forEach(card => {
-                productGrid.appendChild(card);
-            });
-        });
-    });
-</script>

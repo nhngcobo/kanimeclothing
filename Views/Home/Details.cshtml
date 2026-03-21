@@ -57,14 +57,13 @@
                     
                     <div class="details-options">
                         <div class="option-group">
-                            <label for="sizeSelect" class="option-label">@Localizer["Size"]:</label>
-                            <select id="sizeSelect" class="option-select">
-                                <option value="">@Localizer["SelectSize"]</option>
-                                <option value="S" selected="@(Model.Size == "S")">@Localizer["S"]</option>
-                                <option value="M" selected="@(Model.Size == "M")">@Localizer["M"]</option>
-                                <option value="L" selected="@(Model.Size == "L")">@Localizer["L"]</option>
-                                <option value="XL" selected="@(Model.Size == "XL")">@Localizer["XL"]</option>
-                            </select>
+                            <label class="option-label">@Localizer["Size"]:</label>
+                            <div class="size-options">
+                                <button type="button" class="size-btn" data-size="S">@Localizer["S"]</button>
+                                <button type="button" class="size-btn" data-size="M">@Localizer["M"]</button>
+                                <button type="button" class="size-btn" data-size="L">@Localizer["L"]</button>
+                                <button type="button" class="size-btn" data-size="XL">@Localizer["XL"]</button>
+                            </div>
                         </div>
                         
                         <div class="option-group">
@@ -136,6 +135,19 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize size buttons
+    const sizeButtons = document.querySelectorAll('.size-btn');
+    sizeButtons.forEach(button => {
+        if (button.dataset.selected === 'True') {
+            button.classList.add('selected');
+        }
+        
+        button.addEventListener('click', function() {
+            sizeButtons.forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+
     // Generate barcode
     // Initialize barcode if available
     const barcodeValue = '@Model?.Barcode';

@@ -28,9 +28,35 @@ namespace kanimeclothing.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Shop()
+        public async Task<IActionResult> Shop(string? category, string? sort)
         {
             var products = await _productService.GetProductsAsync();
+            
+            // Filter by category
+            if (!string.IsNullOrEmpty(category) && category != "all")
+            {
+                products = products.Where(p => p.Category == category).ToList();
+                ViewBag.SelectedCategory = category;
+            }
+            
+            // Sort products
+            switch (sort)
+            {
+                case "low-to-high":
+                    products = products.OrderBy(p => p.Price).ToList();
+                    break;
+                case "high-to-low":
+                    products = products.OrderByDescending(p => p.Price).ToList();
+                    break;
+                case "newest":
+                    products = products.OrderByDescending(p => p.Id).ToList();
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Id).ToList();
+                    break;
+            }
+            
+            ViewBag.SelectedSort = sort;
             return View(products);
         }
 

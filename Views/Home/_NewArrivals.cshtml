@@ -1,0 +1,28 @@
+@model List<Product>
+
+<!-- New Arrivals Section -->
+<section class="new-arrivals-section">
+    <div class="new-arrivals-container">
+        <div class="section-header">
+            <p class="section-label">NEW COLLECTION</p>
+            <h2 class="section-title">NEW ARRIVALS</h2>
+        </div>
+        <div class="products-grid">
+            @foreach (var product in Model)
+            {
+                <a asp-action="Details" asp-controller="Home" asp-route-id="@product.Id" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="@product.Url" alt="@product.Name" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">@product.Name</h3>
+                            <p class="product-category">@product.Category</p>
+                            <p class="product-price">R@(product.Price.ToString("F2"))</p>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>

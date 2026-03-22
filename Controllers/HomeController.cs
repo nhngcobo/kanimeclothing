@@ -22,9 +22,11 @@ namespace kanimeclothing.Controllers
             var cart = _cartService.GetCart(HttpContext.Session);
             ViewData["CartItemCount"] = cart.ItemCount;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await _productService.GetProductsAsync();
+            var newArrivals = products.Take(3).ToList();
+            return View(newArrivals);
         }
 
         public IActionResult Privacy()

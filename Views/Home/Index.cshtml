@@ -1,4 +1,6 @@
 ﻿@using kanimeclothing.Services
+@using kanimeclothing.Models
+@model List<Product>
 @inject ILocalizationService Localizer
 
 @{
@@ -33,6 +35,8 @@
         </div>
     </div>
 </div>
+
+@await Html.PartialAsync("_NewArrivals", Model)
 
 <script>
     let slideIndex = 0;
@@ -77,7 +81,7 @@
             autoSlideTimer = null;
         }
     }
-
+    // this is to pause the slide show while the user is hovering over it, and resume when they leave(or stop hovering)
     document.addEventListener("DOMContentLoaded", function() {
         currentSlide(0);
         

@@ -11,20 +11,24 @@ namespace kanimeclothing.Tests.Controllers
     {
         private readonly Mock<IProductService> _mockProductService;
         private readonly Mock<ICartService> _mockCartService;
+        private readonly Mock<IPaymentService> _mockPaymentService;
+        private readonly Mock<IOrderService> _mockOrderService;
         private readonly HomeController _controller;
 
         public HomeControllerTests()
         {
             _mockProductService = new Mock<IProductService>();
             _mockCartService = new Mock<ICartService>();
-            _controller = new HomeController(_mockProductService.Object, _mockCartService.Object);
+            _mockPaymentService = new Mock<IPaymentService>();
+            _mockOrderService = new Mock<IOrderService>();
+            _controller = new HomeController(_mockProductService.Object, _mockCartService.Object, _mockPaymentService.Object, _mockOrderService.Object);
         }
 
         [Fact]
-        public void Index_ReturnsViewResult()
+        public async Task Index_ReturnsViewResult()
         {
             // Act
-            var result = _controller.Index();
+            var result = await _controller.Index();
 
             // Assert
             Assert.IsType<ViewResult>(result);

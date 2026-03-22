@@ -21,6 +21,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddHttpClient<IPaymentService, PaymentService>();
 
 // Configure localization
 builder.Services.Configure<RequestLocalizationOptions>(options =>

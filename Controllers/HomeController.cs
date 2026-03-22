@@ -9,11 +9,15 @@ namespace kanimeclothing.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
+        private readonly IPaymentService _paymentService;
+        private readonly IOrderService _orderService;
 
-        public HomeController(IProductService productService, ICartService cartService)
+        public HomeController(IProductService productService, ICartService cartService, IPaymentService paymentService, IOrderService orderService)
         {
             _productService = productService;
             _cartService = cartService;
+            _paymentService = paymentService;
+            _orderService = orderService;
         }
 
         public override void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
@@ -132,32 +136,62 @@ namespace kanimeclothing.Controllers
             return View();
         }
 
+        [HttpGet]
         [HttpPost]
-        public IActionResult PaymentCallback()
+        public async Task<IActionResult> PaymentCallback()
         {
-            // Handle the return from Paystack after payment
-            // Paystack can send either a GET redirect or POST with reference parameter
-            
-            var reference = HttpContext.Request.Query["reference"].ToString() ?? 
-                           HttpContext.Request.Form["reference"].ToString();
-            var status = HttpContext.Request.Query["status"].ToString() ?? 
-                        HttpContext.Request.Form["status"].ToString();
-            
-            // Check if payment was successful
-            if (status.Equals("Ok", StringComparison.OrdinalIgnoreCase) || 
-                !string.IsNullOrEmpty(reference))
+            var reference = HttpContext.Request.Query["reference"].ToString();
+            if (string.IsNullOrWhiteSpace(reference) && HttpContext.Request.HasFormContentType)
             {
-                // Payment successful - clear the cart
-                _cartService.ClearCart(HttpContext.Session);
-                
-                // Set ViewBag for the success view
-                ViewBag.Reference = reference;
-                
-                return View("PaymentSuccess");
+                reference = HttpContext.Request.Form["reference"].ToString();
             }
+
+            var status = HttpContext.Request.Query["status"].ToString();
+            if (string.IsNullOrWhiteSpace(status) && HttpContext.Request.HasFormContentType)
+            {
+                status = HttpContext.Request.Form["status"].ToString();
+            }
+
+            if (string.IsNullOrWhiteSpace(reference))
+            {
+                // no reference to validate; user may land on callback by mistake
+                return RedirectToAction("ViewCart");
+            }
+
+            // Use gateway status if provided. "failed" or "cancelled" should not clear cart.
+            if (!string.IsNullOrWhiteSpace(status) &&
+                !status.Equals("success", StringComparison.OrdinalIgnoreCase) &&
+                !status.Equals("ok", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.Reference = reference;
+                return View("PaymentCancelled");
+            }
+
+            // Verify via API before saving order
+            var isValidPayment = await _paymentService.VerifyPaymentAsync(reference);
+            if (!isValidPayment)
+            {
+                ViewBag.Reference = reference;
+                return View("PaymentCancelled");
+            }
+
+            // Get cart for order creation
+            var cart = _cartService.GetCart(HttpContext.Session);
             
-            // Payment was cancelled or failed
-            return View("PaymentCancelled");
+            // Try to get customer email and phone from session or request
+            var customerEmail = HttpContext.Session.GetString("CustomerEmail");
+            var customerPhone = HttpContext.Session.GetString("CustomerPhone");
+
+            // Create order record
+            var order = await _orderService.CreateOrderAsync(cart, reference, customerEmail, customerPhone);
+
+            // Clear cart after successful order creation
+            _cartService.ClearCart(HttpContext.Session);
+            
+            ViewBag.Reference = reference;
+            ViewBag.OrderId = order.Id;
+            
+            return View("PaymentSuccess");
         }
 
         [HttpPost]

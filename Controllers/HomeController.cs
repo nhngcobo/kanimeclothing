@@ -156,6 +156,73 @@ namespace kanimeclothing.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult PaymentCallback()
+        {
+            // Handle the return from Paystack after payment
+            // Paystack can send either a GET redirect or POST with reference parameter
+            
+            var reference = HttpContext.Request.Query["reference"].ToString() ?? 
+                           HttpContext.Request.Form["reference"].ToString();
+            var status = HttpContext.Request.Query["status"].ToString() ?? 
+                        HttpContext.Request.Form["status"].ToString();
+            
+            // Check if payment was successful
+            if (status.Equals("Ok", StringComparison.OrdinalIgnoreCase) || 
+                !string.IsNullOrEmpty(reference))
+            {
+                // Payment successful - clear the cart
+                _cartService.ClearCart(HttpContext.Session);
+                
+                // Set ViewBag for the success view
+                ViewBag.Reference = reference;
+                
+                return View("PaymentSuccess");
+            }
+            
+            // Payment was cancelled or failed
+            return View("PaymentCancelled");
+        }
+
+        [HttpPost]
+        [Route("api/payment/verify")]
+        public IActionResult VerifyPayment()
+        {
+            // API endpoint for Paystack to call and verify payment
+            // This receives the JSON response {"status":"Ok"}
+            
+            try
+            {
+                using (var reader = new System.IO.StreamReader(HttpContext.Request.Body))
+                {
+                    var body = reader.ReadToEndAsync().Result;
+                    
+                    // Parse the JSON response
+                    var jsonDoc = System.Text.Json.JsonDocument.Parse(body);
+                    var root = jsonDoc.RootElement;
+                    
+                    if (root.TryGetProperty("status", out var statusElement))
+                    {
+                        var status = statusElement.GetString();
+                        
+                        if (status?.Equals("Ok", StringComparison.OrdinalIgnoreCase) == true)
+                        {
+                            // Clear the cart after successful payment
+                            _cartService.ClearCart(HttpContext.Session);
+                            
+                            return Ok(new { success = true, message = "Payment verified and processed successfully" });
+                        }
+                    }
+                }
+                
+                return BadRequest(new { success = false, message = "Invalid payment status" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

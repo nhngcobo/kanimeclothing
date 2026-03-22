@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Payment Successful";
+}
+
+<link rel="stylesheet" href="~/css/payment.css" />
+
+<div class="payment-container">
+    <div class="payment-success">
+        <div class="success-icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your purchase. Your order has been confirmed.</p>
+        
+        <div class="order-details">
+            <div class="detail-row">
+                <span>Transaction Reference:</span>
+                <span class="reference">@(ViewBag.Reference ?? "Payment Confirmed")</span>
+            </div>
+            <p class="note">A confirmation email has been sent to your email address.</p>
+        </div>
+
+        <div class="next-steps">
+            <h3>What's Next?</h3>
+            <ul>
+                <li>Track your order from your account dashboard</li>
+                <li>You'll receive shipping updates via email</li>
+                <li>Expected delivery: 3-5 business days</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <a href="@Url.Action("Shop", "Home")" class="btn-continue">Continue Shopping</a>
+            <a href="@Url.Action("Index", "Home")" class="btn-home">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+

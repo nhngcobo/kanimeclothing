@@ -10,6 +10,7 @@ namespace kanimeclothing.Services
         void AddToCart(ISession session, Product product, string? size, string? color, int quantity = 1);
         void RemoveFromCart(ISession session, int productId, string? size, string? color);
         void UpdateCartQuantity(ISession session, int productId, string? size, string? color, int quantity);
+        void ClearCart(ISession session);
     }
 
     public class CartService : ICartService
@@ -98,6 +99,11 @@ namespace kanimeclothing.Services
             }
             
             SaveCart(session, cart);
+        }
+
+        public void ClearCart(ISession session)
+        {
+            session.Remove(CartSessionKey);
         }
     }
 }

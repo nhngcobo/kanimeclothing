@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Payment Cancelled";
+}
+
+<link rel="stylesheet" href="~/css/payment.css" />
+
+<div class="payment-container">
+    <div class="payment-cancelled">
+        <div class="cancelled-icon">
+            <i class="bi bi-x-circle"></i>
+        </div>
+        <h1>Payment Cancelled</h1>
+        <p>Your payment was not completed. Your cart has been saved and is ready for you to try again.</p>
+
+        <div class="cancellation-notice">
+            <h3>What happened?</h3>
+            <p>You cancelled the payment process. Your items remain in your shopping cart and you can proceed to checkout whenever you're ready.</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="@Url.Action("ViewCart", "Home")" class="btn-return-cart">Return to Cart</a>
+            <a href="@Url.Action("Shop", "Home")" class="btn-continue">Continue Shopping</a>
+            <a href="@Url.Action("Index", "Home")" class="btn-home">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+

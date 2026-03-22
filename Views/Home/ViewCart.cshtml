@@ -91,7 +91,7 @@
                         <span>Total:</span>
                         <span>R@(Model.Total.ToString("F2"))</span>
                     </div>
-                    <button class="checkout-btn">Proceed to Checkout</button>
+                    <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
                 </div>
             </div>
         </div>
@@ -122,5 +122,60 @@ function increaseQty(btn) {
 
 function submitForm(btn) {
     btn.closest('form').submit();
+}
+
+function proceedToCheckout() {
+    // Display a confirmation message with order summary
+    const cartTotal = document.querySelector('.summary-row.total span:last-child').textContent;
+    const isConfirmed = confirm(`Your order total is ${cartTotal}. Do you want to proceed to payment?`);
+    
+    if (isConfirmed) {
+        // Show loading indicator
+        showLoadingMessage('Processing your payment...');
+        
+        // Redirect to Paystack payment gateway with return URL
+        const returnUrl = window.location.origin + '@Url.Action("PaymentCallback", "Home")';
+        const paystackUrl = 'https://paystack.shop/pay/riubdydr0t?redirect_url=' + encodeURIComponent(returnUrl);
+        
+        // Redirect to Paystack
+        window.location.href = paystackUrl;
+    }
+}
+
+function showLoadingMessage(message) {
+    const loader = document.createElement('div');
+    loader.id = 'loading-overlay';
+    loader.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    `;
+    
+    const content = document.createElement('div');
+    content.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    `;
+    
+    content.innerHTML = `
+        <div style="font-size: 2rem; margin-bottom: 1rem;">
+            <i class="bi bi-hourglass-split"></i>
+        </div>
+        <p style="margin: 0; color: #333;">${message}</p>
+        <p style="margin: 0.5rem 0 0 0; color: #999; font-size: 0.9rem;">Redirecting to payment gateway...</p>
+    `;
+    
+    loader.appendChild(content);
+    document.body.appendChild(loader);
 }
 </script>

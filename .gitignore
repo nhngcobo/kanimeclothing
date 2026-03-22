@@ -34,3 +34,7 @@ Thumbs.db
 # Local environment files (optional - comment out if needed for development)
 # appsettings.Development.json
 # appsettings.*.json
+
+# Deployment profiles (contains sensitive credentials)
+*.PublishSettings
+PublishProfiles/*.user

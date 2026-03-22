@@ -1,0 +1,45 @@
+name: Deploy to SmarterASP.NET
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish --self-contained false
+    
+    - name: Deploy to SmarterASP.NET via MSDeploy
+      run: |
+        $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+        $publishUrl = "${{ secrets.SMARTERASP_MSDEPLOY_URL }}"
+        $siteName = "${{ secrets.SMARTERASP_MSDEPLOYSITENAME }}"
+        $username = "${{ secrets.SMARTERASP_USERNAME }}"
+        $password = "${{ secrets.SMARTERASP_PASSWORD }}"
+        
+        & $msdeploy `
+          -verb:sync `
+          -source:contentPath="${{ github.workspace }}\publish" `
+          -dest:contentPath="$siteName,computerName=$publishUrl,userName=$username,password=$password,authType=Basic" `
+          -disableLink:AppPool `
+          -disableLink:ContentExtension `
+          -disableLink:CertificateExtension `
+          -retryAttempts=2 `
+          -retryInterval=1000

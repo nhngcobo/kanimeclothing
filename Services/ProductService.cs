@@ -1,5 +1,6 @@
+using kanimeclothing.Data;
 using kanimeclothing.Models;
-using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace kanimeclothing.Services
 {
@@ -11,15 +12,15 @@ namespace kanimeclothing.Services
 
     public class ProductService : IProductService
     {
-        private readonly IWebHostEnvironment _env;
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<ProductService> _logger;
         private static List<Product>? _cachedProducts;
         private static DateTime _cacheTime = DateTime.MinValue;
         private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(1);
 
-        public ProductService(IWebHostEnvironment env, ILogger<ProductService> logger)
+        public ProductService(ApplicationDbContext context, ILogger<ProductService> logger)
         {
-            _env = env;
+            _context = context;
             _logger = logger;
         }
 
@@ -32,38 +33,23 @@ namespace kanimeclothing.Services
                 return _cachedProducts;
             }
 
-            // Cache expired or doesn't exist, read from file
-            _cachedProducts = await ReadProductsFromFileAsync();
+            // Cache expired or doesn't exist, read from database
+            _cachedProducts = await ReadProductsFromDatabaseAsync();
             _cacheTime = DateTime.UtcNow;
             return _cachedProducts;
         }
 
-        private async Task<List<Product>> ReadProductsFromFileAsync()
+        private async Task<List<Product>> ReadProductsFromDatabaseAsync()
         {
             try
             {
-                var jsonPath = Path.Combine(_env.WebRootPath, "api", "products.json");
-                
-                if (!File.Exists(jsonPath))
-                {
-                    _logger.LogWarning($"Products file not found at {jsonPath}");
-                    return new List<Product>();
-                }
-
-                var json = await File.ReadAllTextAsync(jsonPath);
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                
-                using (var doc = JsonDocument.Parse(json))
-                {
-                    var productsArray = doc.RootElement.GetProperty("products");
-                    var products = JsonSerializer.Deserialize<List<Product>>(productsArray.GetRawText(), options);
-                    _logger.LogInformation("Successfully loaded products from file");
-                    return products ?? new List<Product>();
-                }
+                var products = await _context.Products.ToListAsync();
+                _logger.LogInformation($"Successfully loaded {products.Count} products from database");
+                return products;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error reading products: {ex.Message}");
+                _logger.LogError($"Error reading products from database: {ex.Message}");
                 return new List<Product>();
             }
         }

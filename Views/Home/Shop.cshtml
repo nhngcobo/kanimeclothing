@@ -12,40 +12,19 @@
 
     <div class="shop-filters">
         <div class="filter-buttons">
-            <a asp-action="Shop" asp-route-category="all" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(string.IsNullOrEmpty(ViewBag.SelectedCategory) ? "active" : "")">@Localizer["All"]</a>
-            <a asp-action="Shop" asp-route-category="Men" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Men" ? "active" : "")">@Localizer["Men"]</a>
-            <a asp-action="Shop" asp-route-category="Women" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Women" ? "active" : "")">@Localizer["Women"]</a>
-            <a asp-action="Shop" asp-route-category="Kids" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Kids" ? "active" : "")">@Localizer["Kids"]</a>
-            <a asp-action="Shop" asp-route-category="Accessories" asp-route-sort="@ViewBag.SelectedSort" class="filter-btn @(ViewBag.SelectedCategory == "Accessories" ? "active" : "")">@Localizer["Accessories"]</a>
+            <button type="button" class="filter-btn filter-category-btn active" data-category="all" title="View all products">@Localizer["All"]</button>
+            <button type="button" class="filter-btn filter-category-btn" data-category="Men" title="Filter by Men">@Localizer["Men"]</button>
+            <button type="button" class="filter-btn filter-category-btn" data-category="Women" title="Filter by Women">@Localizer["Women"]</button>
+            <button type="button" class="filter-btn filter-category-btn" data-category="Kids" title="Filter by Kids">@Localizer["Kids"]</button>
+            <button type="button" class="filter-btn filter-category-btn" data-category="Accessories" title="Filter by Accessories">@Localizer["Accessories"]</button>
         </div>
 
         <div class="filter-dropdown">
-            <select class="filter-select" id="priceSort" onchange="window.location.href = this.options[this.selectedIndex].value">
-                <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory })">@Localizer["TypesOfFilter"]</option>
-                @if (ViewBag.SelectedSort == "low-to-high")
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "low-to-high" })" selected>Price: Low to High</option>
-                }
-                else
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "low-to-high" })">Price: Low to High</option>
-                }
-                @if (ViewBag.SelectedSort == "high-to-low")
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "high-to-low" })" selected>Price: High to Low</option>
-                }
-                else
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "high-to-low" })">Price: High to Low</option>
-                }
-                @if (ViewBag.SelectedSort == "newest")
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "newest" })" selected>Newest</option>
-                }
-                else
-                {
-                    <option value="@Url.Action("Shop", new { category = ViewBag.SelectedCategory, sort = "newest" })">Newest</option>
-                }
+            <select class="filter-select" id="priceSort">
+                <option value="">@Localizer["TypesOfFilter"]</option>
+                <option value="low-to-high">Price: Low to High</option>
+                <option value="high-to-low">Price: High to Low</option>
+                <option value="newest">Newest</option>
             </select>
         </div>
     </div>
@@ -79,3 +58,49 @@
         }
     </div>
 </div>
+
+<!-- JavaScript for filtering and sorting products, much easier than a AJAX call -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryBtns = document.querySelectorAll('.filter-category-btn');
+    const sortSelect = document.getElementById('priceSort');
+    const grid = document.querySelector('.products-grid');
+    const products = Array.from(document.querySelectorAll('.product-card'));
+
+    function applyFilter() {
+        const category = document.querySelector('.filter-category-btn.active').dataset.category;
+        const sort = sortSelect.value;
+
+        // Filter products
+        let filtered = products.filter(p => 
+            category === 'all' || p.dataset.category === category
+        );
+
+        // Sort products
+        if (sort === 'low-to-high') {
+            filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+        } else if (sort === 'high-to-low') {
+            filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+        } else if (sort === 'newest') {
+            filtered.sort((a, b) => parseInt(b.dataset.id) - parseInt(a.dataset.id));
+        }
+
+        // Show/hide and reorder
+        products.forEach(p => p.parentElement.style.display = 'none');
+        filtered.forEach(p => {
+            p.parentElement.style.display = 'block';
+            grid.appendChild(p.parentElement);
+        });
+    }
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            applyFilter();
+        });
+    });
+
+    sortSelect.addEventListener('change', applyFilter);
+});
+</script>

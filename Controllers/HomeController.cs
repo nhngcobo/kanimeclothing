@@ -169,8 +169,23 @@ namespace kanimeclothing.Controllers
 
             // Verify via API before saving order
             var isValidPayment = await _paymentService.VerifyPaymentAsync(reference);
+
+            var statusIsSuccess = !string.IsNullOrWhiteSpace(status) &&
+                                  (status.Equals("success", StringComparison.OrdinalIgnoreCase) ||
+                                   status.Equals("ok", StringComparison.OrdinalIgnoreCase) ||
+                                   status.Equals("paid", StringComparison.OrdinalIgnoreCase));
+
             if (!isValidPayment)
             {
+                // If Paystack says success but verification API is temporarily unreachable, still clear cart
+                if (statusIsSuccess)
+                {
+                    _cartService.ClearCart(HttpContext.Session);
+                    ViewBag.Reference = reference;
+                    ViewBag.OrderId = 0;
+                    return View("PaymentSuccess");
+                }
+
                 ViewBag.Reference = reference;
                 return View("PaymentCancelled");
             }

@@ -32,9 +32,6 @@
                     <a class="nav-link text-black fw-500" asp-area="" asp-controller="Home" asp-action="Contact" title="Contact">
                         CONTACT
                     </a>
-                    <a class="nav-link text-black fw-500" href="#" title="User Account">
-                        <i class="bi bi-person"></i>
-                    </a>
                     <a class="nav-link text-black fw-500 position-relative" asp-area="" asp-controller="Home" asp-action="ViewCart" title="Shopping Cart">
                         <i class="bi bi-bag"></i>
                         @if (ViewData["CartItemCount"] != null && (int?)ViewData["CartItemCount"] > 0)

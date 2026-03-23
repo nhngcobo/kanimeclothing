@@ -8,6 +8,7 @@ namespace kanimeclothing.Services
     {
         Task<Order> CreateOrderAsync(Cart cart, string? paystackReference, string? customerEmail, string? customerPhone);
         Task<Order?> GetOrderByReferenceAsync(string reference);
+        Task UpdateStockAsync(List<(int productId, int quantity)> items);
     }
 
     public class OrderService : IOrderService
@@ -23,7 +24,7 @@ namespace kanimeclothing.Services
         {
             var order = new Order
             {
-                PaystackReference = paystackReference,
+                PaystackReference = paystackReference ?? "",
                 CustomerEmail = customerEmail,
                 CustomerPhone = customerPhone,
                 TotalAmount = cart.Total,
@@ -60,6 +61,30 @@ namespace kanimeclothing.Services
             return await _context.Orders
                 .Where(o => o.PaystackReference == reference)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateStockAsync(List<(int productId, int quantity)> items)
+        {
+            System.Diagnostics.Debug.WriteLine($"[UpdateStock] Updating stock for {items.Count} items");
+            
+            foreach (var (productId, quantity) in items)
+            {
+                System.Diagnostics.Debug.WriteLine($"[UpdateStock] Decrementing ProductId={productId}, Qty={quantity}");
+                
+                var product = await _context.Products.FindAsync(productId);
+                if (product != null)
+                {
+                    product.Stock -= quantity;
+                    System.Diagnostics.Debug.WriteLine($"[UpdateStock] Updated {product.Name} stock to {product.Stock}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[UpdateStock] Product {productId} not found");
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            System.Diagnostics.Debug.WriteLine($"[UpdateStock] Stock update completed");
         }
     }
 }

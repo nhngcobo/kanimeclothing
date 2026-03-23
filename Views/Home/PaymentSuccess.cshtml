@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="~/css/payment.css" />
 
 <div class="payment-container">
-    <div class="payment-success">
+    <div class="payment-success" id="success-content">
         <div class="success-icon">
             <i class="bi bi-check-circle"></i>
         </div>
@@ -17,6 +17,15 @@
                 <span>Transaction Reference:</span>
                 <span class="reference">@(ViewBag.Reference ?? "Payment Confirmed")</span>
             </div>
+            <p class="note" id="processing-note" style="display:none;">
+                <i class="spinner"></i> Processing your order...
+            </p>
+            <p class="note" id="success-note" style="display:none;">
+                ✓ Order processed successfully!
+            </p>
+            <p class="note" id="error-note" style="display:none; color: #d9534f;">
+                Warning: Order may not have been processed. Please contact support if you don't receive a confirmation email.
+            </p>
             <p class="note">A confirmation email has been sent to your email address.</p>
         </div>
 
@@ -30,10 +39,108 @@
         </div>
 
         <div class="action-buttons">
-            <a href="@Url.Action("Shop", "Home")" class="btn-continue">Continue Shopping</a>
-            <a href="@Url.Action("Index", "Home")" class="btn-home">Back to Home</a>
+            <a href="@Url.Action("Shop", "Home")" class="btn-continue" id="btn-continue" disabled style="opacity: 0.5; cursor: not-allowed;">Continue Shopping</a>
+            <a href="@Url.Action("Index", "Home")" class="btn-home" id="btn-home" disabled style="opacity: 0.5; cursor: not-allowed;">Back to Home</a>
         </div>
     </div>
 </div>
 
-
+<script>
+    async function processOrder() {
+        console.log('Starting order processing...');
+        const processingNote = document.getElementById('processing-note');
+        const successNote = document.getElementById('success-note');
+        const errorNote = document.getElementById('error-note');
+        const btnContinue = document.getElementById('btn-continue');
+        const btnHome = document.getElementById('btn-home');
+        
+        // Show processing state
+        if (processingNote) processingNote.style.display = 'block';
+        
+        const reference = '@(ViewBag.Reference ?? "")';
+        
+        if (!reference) {
+            console.error('No payment reference found');
+            if (errorNote) errorNote.style.display = 'block';
+            enableButtons();
+            return;
+        }
+        
+        // Retrieve cart data from sessionStorage
+        const cartDataJson = sessionStorage.getItem('cartData');
+        if (!cartDataJson) {
+            console.warn('No cart data found in sessionStorage');
+            if (errorNote) errorNote.style.display = 'block';
+            enableButtons();
+            return;
+        }
+        
+        console.log('Retrieved cart data from sessionStorage');
+        const cartItems = JSON.parse(cartDataJson);
+        console.log('Cart items:', cartItems);
+        
+        try {
+            // Call API to update stock and create order
+            console.log('Calling /api/payment/update-stock...');
+            const response = await fetch('/api/payment/update-stock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    items: cartItems,
+                    paystackReference: reference,
+                    customerEmail: sessionStorage.getItem('customerEmail'),
+                    customerPhone: sessionStorage.getItem('customerPhone')
+                })
+            });
+            
+            console.log('API Response Status:', response.status);
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Stock updated and order created:', data);
+                
+                // Show success message
+                if (processingNote) processingNote.style.display = 'none';
+                if (successNote) successNote.style.display = 'block';
+                
+                // Clear sessionStorage
+                sessionStorage.removeItem('cartData');
+                sessionStorage.removeItem('customerEmail');
+                sessionStorage.removeItem('customerPhone');
+            } else {
+                const errorData = await response.json();
+                console.error('Failed to update stock:', errorData);
+                if (errorNote) errorNote.style.display = 'block';
+                if (processingNote) processingNote.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error processing order:', error);
+            if (errorNote) errorNote.style.display = 'block';
+            if (processingNote) processingNote.style.display = 'none';
+        } finally {
+            // Enable buttons regardless
+            enableButtons();
+        }
+    }
+    
+    function enableButtons() {
+        const btnContinue = document.getElementById('btn-continue');
+        const btnHome = document.getElementById('btn-home');
+        
+        if (btnContinue) {
+            btnContinue.disabled = false;
+            btnContinue.style.opacity = '1';
+            btnContinue.style.cursor = 'pointer';
+        }
+        
+        if (btnHome) {
+            btnHome.disabled = false;
+            btnHome.style.opacity = '1';
+            btnHome.style.cursor = 'pointer';
+        }
+    }
+    
+    // Process order when page loads
+    document.addEventListener('DOMContentLoaded', processOrder);

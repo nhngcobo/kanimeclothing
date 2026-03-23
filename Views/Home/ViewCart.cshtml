@@ -214,10 +214,39 @@ function openCheckoutModal() {
 }
 
 function redirectToPayment() {
-    const returnUrl = window.location.origin + '@Url.Action("PaymentCallback", "Home")';
+    // Capture cart items to sessionStorage before redirect
+    const rows = document.querySelectorAll('.cart-table tbody tr');
+    const cartItems = [];
+    
+    rows.forEach(row => {
+        const productInfo = row.querySelector('.product-info span').textContent;
+        const priceText = row.querySelector('td:nth-child(4)').textContent.trim().replace('R', '');
+        const quantity = parseInt(row.querySelector('.qty-input').value, 10) || 1;
+        const imageUrl = row.querySelector('.cart-item-image').src;
+        const size = row.querySelector('td:nth-child(2)').textContent.trim();
+        const color = row.querySelector('td:nth-child(3)').textContent.trim();
+        const productId = row.querySelector('input[name="productId"]').value;
+        
+        cartItems.push({
+            productId: parseInt(productId),
+            productName: productInfo,
+            price: parseFloat(priceText.replace(',', '')),
+            quantity: quantity,
+            size: size === '-' ? '' : size,
+            color: color === '-' ? '' : color,
+            imageUrl: imageUrl
+        });
+    });
+    
+    console.log('Storing cart data in sessionStorage:', cartItems);
+    sessionStorage.setItem('cartData', JSON.stringify(cartItems));
+    
+    // Redirect to Paystack
+    const returnUrl = window.location.origin + '/Home/PaymentCallback';
     const paystackUrl = 'https://paystack.shop/pay/riubdydr0t?redirect_url=' + encodeURIComponent(returnUrl);
     window.location.href = paystackUrl;
 }
+
 
 // Close modal when clicking outside of modal content
 const checkoutModal = document.getElementById('checkout-modal');

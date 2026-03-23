@@ -144,6 +144,23 @@ namespace kanimeclothing.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Checkout()
+        {
+            var cart = _cartService.GetCart(HttpContext.Session);
+            
+            if (cart.Items.Count == 0)
+            {
+                return Json(new { success = false, message = "Cart is empty" });
+            }
+
+            // Store cart items count for logging
+            HttpContext.Session.SetInt32("CartItemCount", cart.Items.Count);
+            System.Diagnostics.Debug.WriteLine($"[Checkout] Cart items stored: {cart.Items.Count}");
+
+            return Ok(new { success = true });
+        }
+
         [HttpGet]
         [HttpPost]
         public async Task<IActionResult> PaymentCallback()
@@ -154,104 +171,80 @@ namespace kanimeclothing.Controllers
                 reference = HttpContext.Request.Form["reference"].ToString();
             }
 
-            var status = HttpContext.Request.Query["status"].ToString();
-            if (string.IsNullOrWhiteSpace(status) && HttpContext.Request.HasFormContentType)
-            {
-                status = HttpContext.Request.Form["status"].ToString();
-            }
-
             if (string.IsNullOrWhiteSpace(reference))
             {
-                // no reference to validate; user may land on callback by mistake
                 return RedirectToAction("ViewCart");
             }
 
-            // Use gateway status if provided. "failed" or "cancelled" should not clear cart.
-            if (!string.IsNullOrWhiteSpace(status) &&
-                !status.Equals("success", StringComparison.OrdinalIgnoreCase) &&
-                !status.Equals("ok", StringComparison.OrdinalIgnoreCase))
-            {
-                ViewBag.Reference = reference;
-                return View("PaymentCancelled");
-            }
-
-            // Verify via API before saving order
+            // Verify payment with Paystack
+            System.Diagnostics.Debug.WriteLine($"[PaymentCallback] Verifying payment with reference: {reference}");
             var isValidPayment = await _paymentService.VerifyPaymentAsync(reference);
-
-            var statusIsSuccess = !string.IsNullOrWhiteSpace(status) &&
-                                  (status.Equals("success", StringComparison.OrdinalIgnoreCase) ||
-                                   status.Equals("ok", StringComparison.OrdinalIgnoreCase) ||
-                                   status.Equals("paid", StringComparison.OrdinalIgnoreCase));
-
+            
+            System.Diagnostics.Debug.WriteLine($"[PaymentCallback] Verification result: {isValidPayment}");
+            
             if (!isValidPayment)
             {
-                // If Paystack says success but verification API is temporarily unreachable, still clear cart
-                if (statusIsSuccess)
-                {
-                    _cartService.ClearCart(HttpContext.Session);
-                    ViewBag.Reference = reference;
-                    ViewBag.OrderId = 0;
-                    return View("PaymentSuccess");
-                }
-
+                System.Diagnostics.Debug.WriteLine($"[PaymentCallback] Payment verification failed");
                 ViewBag.Reference = reference;
                 return View("PaymentCancelled");
             }
 
-            // Get cart for order creation
-            var cart = _cartService.GetCart(HttpContext.Session);
-            
-            // Try to get customer email and phone from session or request
-            var customerEmail = HttpContext.Session.GetString("CustomerEmail");
-            var customerPhone = HttpContext.Session.GetString("CustomerPhone");
-
-            // Create order record
-            var order = await _orderService.CreateOrderAsync(cart, reference, customerEmail, customerPhone);
-
-            // Clear cart after successful order creation
-            _cartService.ClearCart(HttpContext.Session);
-            
+            // Payment verified successfully - show success page
+            // Stock update will be handled by client-side API call
+            System.Diagnostics.Debug.WriteLine($"[PaymentCallback] Payment verified successfully, showing success page");
             ViewBag.Reference = reference;
-            ViewBag.OrderId = order.Id;
-            
             return View("PaymentSuccess");
         }
 
         [HttpPost]
-        [Route("api/payment/verify")]
-        public IActionResult VerifyPayment()
+        [Route("api/payment/update-stock")]
+        public async Task<IActionResult> UpdateOrderStock([FromBody] UpdateStockRequest request)
         {
-            // API endpoint for Paystack to call and verify payment
-            // This receives the JSON response {"status":"Ok"}
+            System.Diagnostics.Debug.WriteLine($"[UpdateOrderStock] Received request for {request?.Items?.Count ?? 0} items");
             
+            if (request?.Items == null || request.Items.Count == 0)
+            {
+                return BadRequest(new { success = false, message = "No items provided" });
+            }
+
             try
             {
-                using (var reader = new System.IO.StreamReader(HttpContext.Request.Body))
+                // Extract product ID and quantity pairs
+                var items = request.Items.Select(item => (item.ProductId, item.Quantity)).ToList();
+                
+                // Update stock
+                await _orderService.UpdateStockAsync(items);
+                
+                // Optionally create order record
+                if (!string.IsNullOrWhiteSpace(request.PaystackReference))
                 {
-                    var body = reader.ReadToEndAsync().Result;
-                    
-                    // Parse the JSON response
-                    var jsonDoc = System.Text.Json.JsonDocument.Parse(body);
-                    var root = jsonDoc.RootElement;
-                    
-                    if (root.TryGetProperty("status", out var statusElement))
+                    var cart = new Cart();
+                    cart.Items = request.Items.Select(item => new CartItem
                     {
-                        var status = statusElement.GetString();
-                        
-                        if (status?.Equals("Ok", StringComparison.OrdinalIgnoreCase) == true)
-                        {
-                            // Clear the cart after successful payment
-                            _cartService.ClearCart(HttpContext.Session);
-                            
-                            return Ok(new { success = true, message = "Payment verified and processed successfully" });
-                        }
-                    }
+                        ProductId = item.ProductId,
+                        ProductName = item.ProductName ?? "",
+                        Price = item.Price,
+                        Quantity = item.Quantity,
+                        Size = item.Size,
+                        Color = item.Color,
+                        ImageUrl = item.ImageUrl ?? ""
+                    }).ToList();
+                    
+                    var order = await _orderService.CreateOrderAsync(cart, request.PaystackReference, 
+                        request.CustomerEmail, request.CustomerPhone);
+                    
+                    System.Diagnostics.Debug.WriteLine($"[UpdateOrderStock] Order created with ID: {order.Id}");
                 }
                 
-                return BadRequest(new { success = false, message = "Invalid payment status" });
+                // Clear cart from session
+                _cartService.ClearCart(HttpContext.Session);
+                
+                System.Diagnostics.Debug.WriteLine($"[UpdateOrderStock] Stock updated successfully");
+                return Ok(new { success = true, message = "Stock updated and order created" });
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[UpdateOrderStock] ERROR: {ex.GetType().Name}: {ex.Message}");
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
@@ -261,5 +254,25 @@ namespace kanimeclothing.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    // Request models for API endpoints
+    public class UpdateStockRequest
+    {
+        public List<StockItem> Items { get; set; } = new();
+        public string? PaystackReference { get; set; }
+        public string? CustomerEmail { get; set; }
+        public string? CustomerPhone { get; set; }
+    }
+
+    public class StockItem
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public string? ProductName { get; set; }
+        public decimal Price { get; set; }
+        public string? Size { get; set; }
+        public string? Color { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

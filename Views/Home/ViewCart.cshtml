@@ -150,22 +150,35 @@ function updateCartSummary() {
 }
 
 async function proceedToCheckout() {
-    await syncCartQuantitiesToServer();
-    openCheckoutModal();
+    try {
+        await syncCartQuantitiesToServer();
+        openCheckoutModal();
+    } catch (error) {
+        console.error('Error syncing cart quantities:', error);
+        // Still proceed to checkout even if sync fails
+        openCheckoutModal();
+    }
 }
 
 async function syncCartQuantitiesToServer() {
     const rows = document.querySelectorAll('.cart-items-section tbody tr');
     const url = '@Url.Action("UpdateCart", "Home")';
 
+    console.log('Syncing cart quantities for', rows.length, 'items');
+
     for (const row of rows) {
         const form = row.querySelector('form.quantity-form');
-        if (!form) continue;
+        if (!form) {
+            console.warn('No quantity-form found in row:', row);
+            continue;
+        }
 
         const productId = form.querySelector('input[name="productId"]').value;
         const size = form.querySelector('input[name="size"]').value;
         const color = form.querySelector('input[name="color"]').value;
         const quantity = form.querySelector('input[name="quantity"]').value;
+
+        console.log('Updating item:', { productId, size, color, quantity });
 
         const data = new URLSearchParams();
         data.append('productId', productId);
@@ -173,13 +186,23 @@ async function syncCartQuantitiesToServer() {
         data.append('color', color);
         data.append('quantity', quantity);
 
-        await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: data.toString()
-        });
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data.toString()
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update item:', productId, response.status, response.statusText);
+            } else {
+                console.log('Successfully updated item:', productId);
+            }
+        } catch (fetchError) {
+            console.error('Network error updating item:', productId, fetchError);
+        }
     }
 }
 

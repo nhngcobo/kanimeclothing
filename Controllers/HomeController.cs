@@ -128,6 +128,14 @@ namespace kanimeclothing.Controllers
         public IActionResult UpdateCart(int productId, string? size, string? color, int quantity)
         {
             _cartService.UpdateCartQuantity(HttpContext.Session, productId, size, color, quantity);
+
+            // Check if this is an AJAX request
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
+                Request.Headers["Accept"].ToString().Contains("application/json"))
+            {
+                return Json(new { success = true });
+            }
+
             return RedirectToAction("ViewCart");
         }
 

@@ -40,6 +40,13 @@ cd kanimeclothing
    }
    ```
 
+   4. **(Optional - Local Payment Testing with ngrok)**
+
+Since Paystack requires a publicly accessible callback URL, you can use **ngrok** to expose your local development server:
+
+```bash
+ngrok http https://localhost:5001
+
 4. **Run migrations** (if applicable):
    ```bash
    dotnet ef database update
@@ -287,19 +294,6 @@ Switch language via browser culture settings or query string.
 - Check firewall/network blocking Paystack API
 
 ---
-
-## 📝 License
-
-This project is proprietary. Contact the owner for usage rights.
-
----
-
-## 👤 Author
-
-**Your Name** - Project Owner
-
-For questions or issues, open an issue on GitHub or contact via email.
-
 ---
 
 ## 🔄 Version History
